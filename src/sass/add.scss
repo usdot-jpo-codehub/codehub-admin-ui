@@ -1,0 +1,103 @@
+.ch-add--wrapper-h {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  .ch-add--wrapper-v {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex: 0.5;
+    max-width: units('mobile-lg');
+    .ch-add--message-alert {
+      color: $ch-color-dark-red;
+      font-size: units(1.5);
+    }
+    .ch-add--message-action {
+      color: $ch-color-blue;
+      font-size: units(1.5);
+    }
+    .ch-add--input {
+      margin-bottom: units(1);
+      label {
+        color: $ch-color-dark-gray;
+        font-size: units(1.5);
+      }
+      input {
+        border: solid 1px $ch-color-gray;
+        border-radius: units(0.5);
+      }
+      input, select {
+        width: 100%;
+      }
+      label, input {
+        display:block;
+      }
+      ::-webkit-input-placeholder { /* Edge */
+        color: $ch-color-dark-gray;
+        font-size: units(1.5);
+        padding-left: units(1);
+      }
+      
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: $ch-color-dark-gray;
+        font-size: units(1.5);
+        padding-left: units(1);
+      }
+      
+      ::placeholder {
+        color: $ch-color-dark-gray;
+        font-size: units(1.5);
+        padding-left: units(1);
+      }
+    }
+    .ch-add--input-disable {
+      input {
+        color: $ch-color-black;
+        font-weight: normal;
+        border: solid 0px transparent;
+      }
+    }
+    .ch-add--input-checkbox {
+      margin-bottom: units(1);
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-content: center;
+      span {
+        color: $ch-color-dark-gray;
+        font-size: units(1.5);
+        margin-left: units(0.5);
+      }
+      input {
+        border: solid 1px $ch-color-gray;
+        border-radius: units(0.5);
+      }
+    }
+    .ch-add--input-alert {
+      input, select {
+        border: solid 1px $ch-color-red;
+        border-radius: units(0.5);
+      }
+
+    }
+    .ch-add--controls {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-content: center;
+      margin-top: units(1.5);
+      button {
+        width: units(15);
+        border-color: $ch-color-gray;
+        border-radius: units(1);
+        margin-right: units(0.5);
+        margin-left: units(0.5);
+        &:hover {
+          border-color: $ch-color-dark-gray;
+        }
+      }
+    }
+  }
+}

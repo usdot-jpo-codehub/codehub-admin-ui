@@ -1,0 +1,31 @@
+.ch-controls-wrapper {
+  background-color: $ch-color-background;
+  padding-top: units(0.5);
+  padding-bottom: units(0.5);
+
+  .ch-controls--buttons {
+    display: flex;
+    flex-basis: auto;
+    flex-flow: wrap;
+    flex-direction: row;
+    align-content: center;
+    justify-content: flex-start;
+
+    button {
+      width: units(15);
+      margin-left: units(1.5);
+      border-radius: units(0.5);
+      border-color:$ch-color-gray;
+      border-width: 1px;
+      font-weight: normal;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.3s;
+      &:hover {
+        border-color: $ch-color-navy;
+        font-weight: bold;
+      }
+    }
+
+    
+  }
+}

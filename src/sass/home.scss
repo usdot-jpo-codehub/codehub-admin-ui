@@ -1,0 +1,11 @@
+.ch-home--wrapper {
+  background-color: $ch-color-background;
+  .ch-home--result {
+
+    ul {
+      padding-left: units(10);
+      padding-right: units(10);
+      list-style-type: none;
+    }
+  }
+}
