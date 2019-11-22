@@ -3,7 +3,7 @@
 CodeHub Admin UI is the front end user interface to manage the meta-data used by the CodeHub Ingestion system.
 
 ## Usage
-Once the application is running on a configured the user interface should be accessible through the usage of a Web Browser application.
+Once the application is running on a configured the user interface should be accessible through the usage of a Web Browser application. 
 
 ---
 ## Autorization Token
