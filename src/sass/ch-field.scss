@@ -1,0 +1,55 @@
+.ch-field--wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  justify-content: flex-start;
+  align-content: center;
+  margin-left: units(1);
+  margin-right: units(1);
+  margin-top: units(1);
+  margin-bottom: units(1);
+  .ch-field--label {
+    align-self: flex-end;
+    font-size: units(1.5);
+    font-weight: normal;
+    color: $ch-color-dark-gray;
+    margin-right: units(0.5);
+  }
+  .ch-field--value {
+    color: $ch-color-black;
+  }
+  .ch-field--value-small {
+    font-size: units(1);
+  }
+  .ch-field--value-medium {
+    font-size: units(2);
+  }
+  .ch-field--value-large {
+    font-size: units(3);
+  }
+  .ch-field--value-normal {
+    font-weight: normal;
+  }
+  .ch-field--value-bold {
+    font-weight: bold;
+  }
+
+  .ch-field--value-blue {
+    color: darken($ch-color-blue, 20%);
+  }
+  .ch-field--value-navy {
+    color: $ch-color-navy;
+  }
+  .ch-field--value-green {
+    color: $ch-color-green;
+  }
+  .ch-field--value-gray {
+    color: $ch-color-dark-gray;
+  }
+  .ch-field--value-black {
+    color: $ch-color-black;
+  }
+  .ch-field--value-shadow {
+    text-shadow: 1px 1px lighten($ch-color-gray, 10%);
+  }
+}

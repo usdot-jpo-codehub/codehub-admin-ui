@@ -1,0 +1,25 @@
+@import './uswds-theme-utilities.scss';
+@import './override_uswds.scss';
+@import '../../node_modules/uswds/src/stylesheets/uswds.scss';
+@import './variables.scss';
+@import './app.scss';
+@import './ch-header.scss';
+@import './home.scss';
+@import './ch-controls.scss';
+@import './ch-search-bar.scss';
+@import './ch-repo.scss';
+@import './ch-field.scss';
+@import './add.scss';
+@import './remove.scss';
+@import './reset.scss';
+@import './update.scss';
+
+html, body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background-color: $ch-color-background;
+}
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}

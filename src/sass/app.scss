@@ -1,0 +1,11 @@
+.ch-app-wrapper {
+  background-color: lighten($ch-color-background, 5%);
+  .ch-app-router-view {
+    margin-top: units(3);
+    padding-top: units(0.5);
+  }
+  .ch-app-router-view--extended {
+    margin-top: units(15);
+    padding-top: units(4)+units(0.5);
+  }
+}

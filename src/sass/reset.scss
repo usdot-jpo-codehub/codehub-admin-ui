@@ -1,0 +1,61 @@
+.ch-reset--wrapper-h {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  .ch-reset--wrapper-v {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: center;
+    .ch-reset--message {
+      color: $ch-color-black;
+      font-size: units(2);
+    }
+    .ch-reset--message-alert {
+      color: $ch-color-dark-red;
+      font-size: units(1.5);
+    }
+    .ch-reset--message-action {
+      color: $ch-color-blue;
+      font-size: units(1.5);
+    }
+    .ch-reset--label {
+      color: $ch-color-dark-gray;
+      font-size: units(1.5);
+      margin-left: units(2);
+    }
+    .ch-reset--repos {
+      ul {
+        padding: 0;
+        list-style-type: none;
+      }
+    }
+    .ch-reset--controls {
+      button {
+        width: units(15);
+        border-color: $ch-color-gray;
+        border-radius: units(1);
+        margin-right: units(0.5);
+        margin-left: units(0.5);
+        &:hover {
+          border-color: $ch-color-dark-gray;
+        }
+      }
+      input {
+        border: solid 1px $ch-color-gray;
+        border-radius: units(0.5);
+      }
+    }
+    .ch-reset--controls-alert {
+      input {
+        border: solid 1px $ch-color-red;
+        border-radius: units(0.5);
+      }
+    }
+    hr {
+      border: solid 1px lighten($ch-color-gray, 15%);
+      width: 100%;
+    }
+  }
+}

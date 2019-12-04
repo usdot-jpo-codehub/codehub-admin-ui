@@ -1,0 +1,102 @@
+.ch-update--wrapper-h {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  hr {
+    border: solid 1px lighten($ch-color-gray, 10%);
+    width: 100%;
+  }
+  .ch-update--wrapper-v {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: flex-start;
+    .ch-update--message {
+      color: $ch-color-black;
+      font-size: units(2);
+    }
+    .ch-update--message-alert {
+      color: $ch-color-dark-red;
+      font-size: units(1.5);
+    }
+    .ch-update--message-action {
+      color: $ch-color-blue;
+      font-size: units(1.5);
+    }
+    .ch-update--input {
+      margin-bottom: units(1);
+      label {
+        color: $ch-color-dark-gray;
+        font-size: units(1.5);
+      }
+      input {
+        border: solid 1px $ch-color-gray;
+        border-radius: units(0.5);
+      }
+      input, select {
+        width: 100%;
+      }
+      label, input {
+        display:block;
+      }
+    }
+    .ch-update--input-disable {
+      input, select {
+        color: $ch-color-black;
+        font-weight: normal;
+        border: solid 0px transparent;
+      }
+    }
+    .ch-update--input-checkbox {
+      margin-bottom: units(1);
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-content: center;
+      span {
+        color: $ch-color-dark-gray;
+        font-size: units(1.5);
+        margin-left: units(0.5);
+      }
+      input {
+        border: solid 1px $ch-color-gray;
+        border-radius: units(0.5);
+      }
+    }
+    .ch-update--input-alert {
+      input, select {
+        border: solid 1px $ch-color-red;
+        border-radius: units(0.5);
+      }
+
+    }
+    .ch-update--controls {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-content: center;
+      margin-top: units(1.5);
+      button {
+        width: units(15);
+        border-color: $ch-color-gray;
+        border-radius: units(1);
+        margin-right: units(0.5);
+        margin-left: units(0.5);
+        &:hover {
+          border-color: $ch-color-dark-gray;
+        }
+      }
+      input {
+        border: solid 1px $ch-color-gray;
+        border-radius: units(0.5);
+      }
+    }
+    .ch-update--controls-alert {
+      input {
+        border: solid 1px $ch-color-red;
+        border-radius: units(0.5);
+      }
+    }
+  }
+}

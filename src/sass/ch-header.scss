@@ -1,0 +1,91 @@
+.ch-header-wrapper {
+  position: fixed;
+  top:0;
+  width: 100%;
+
+  .ch-header-nav-wrapper {
+    display: flex !important;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+    .ch-header-nav {
+      @extend .usa-navbar;
+      max-width: 100% !important;
+      background-color: $ch-color-navy; 
+      width: 100%;
+      height: units(7);
+      display: flex !important;
+      flex-direction: row;
+      align-content: center;
+      justify-content: flex-start;
+    
+      .ch-header-nav_logo {
+        
+        img {
+          height: units(3);
+        }
+      }
+      .ch-header-nav_text {
+        .ch-header-nav_text-title {
+          color: darken($ch-color-white , 5%);
+          font-size: units(3)+units(0.5);
+          margin-left: units(2.5);
+          padding: 0;
+        }
+        .ch-header-nav_text-version {
+          color: darken($ch-color-white , 15%);
+          font-size: units(1);
+          margin-left: units(2.5);
+          margin-bottom: units(0.5);
+          padding: 0;
+        }
+      }
+      .ch-header-nav_token {
+        input {
+          margin-top: units(1.5);
+          font-size: units(1.5);
+          width: units('card-lg');
+          border: solid 1px $ch-color-gray;
+          border-radius: units(0.5);
+        }
+      }
+      .ch-header-nav_links {
+        color: $ch-color-white;
+        margin-left: units(2.5);
+      }
+    }
+  }
+  .usa-nav {
+    @extend .usa-nav;
+    border-top: solid 0px transparent !important;
+    &.is-visible {
+      color: $ch-color-white;
+      background-color: darken($ch-color-gray, 30%);
+    }
+    .usa-nav__primary {
+      @extend .usa-nav__primary;
+      .usa-nav__primary-item {
+        @extend .usa-nav__primary-item;
+        a {
+            color: darken($ch-color-white, 5%) !important;
+            &:hover {
+                color: lighter($ch-color-green,10%);
+                border-bottom-style: solid;
+                border-bottom-width: 2px;
+                border-bottom-color: $ch-color-gray;
+            }
+            &.router-link-exact-active,
+            &.router-link-active {
+                border-bottom-style: solid;
+                border-bottom-width: 2px;
+                border-bottom-color: $ch-color-white;
+                &:after {
+                    width: 0;
+                }
+            }
+        }
+      }
+    }
+    
+  }
+}
