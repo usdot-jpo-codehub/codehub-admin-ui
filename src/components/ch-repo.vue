@@ -9,6 +9,7 @@
     <hr>
     <div class="ch-repo--row ch-repo--row-padding-left">
       <CHField label="enabled:" :value="item.enabled" size="medium" weight="normal"/>
+      <CHField label="featured:" :value="item.featured ? item.featured : false" size="medium" weight="normal"/>
       <CHField label="status:" :value="item.status" size="medium" weight="normal"/>
       
     </div>

@@ -100,10 +100,12 @@ export default new Vuex.Store({
             for(let i=0; i< reposData.length; i++) {
               reposData[i].selected = false;
               reposData[i].status = null;
+              reposData[i].featured = null;
               let pa = projectsData.filter( p => p.id == reposData[i].id);
               if (pa.length > 0) {
                 if (pa[0].badges) {
                   reposData[i].status = pa[0].badges.status;
+                  reposData[i].featured = pa[0].badges.featured;
                 }
               } 
             }
@@ -132,7 +134,8 @@ export default new Vuex.Store({
       let projectData = {
         repository_url: data.url,
         badges: {
-          status: data.status
+          status: data.status,
+          featured: data.featured
         }
       } 
       const repoConn = axios({
@@ -194,7 +197,8 @@ export default new Vuex.Store({
         id: data.id,
         repository_url: data.url,
         badges: {
-          status: data.status
+          status: data.status,
+          featured: data.featured
         }
       } 
       const repoConn = axios({

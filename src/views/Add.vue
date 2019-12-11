@@ -12,6 +12,8 @@
       <div class="ch-add--input-checkbox">
         <input type="checkbox" v-model="newRepo.enabled" name="add-input-enabled" id="id-add-input-enabled">
         <span>Enabled</span>
+        <input type="checkbox" v-model="newRepo.featured" name="add-input-featured" id="id-add-input-featured">
+        <span>Featured</span>
       </div>
       <div :class="invalidUrl ? 'ch-add--input ch-add--input-alert' : 'ch-add--input'">
         <label for="id-add-input-url">Url</label>
@@ -60,7 +62,8 @@ export default {
         url: null,
         source: null,
         status: 'pending',
-        enabled: true
+        enabled: true,
+        featured: false
       },
       invalidName: false,
       invalidOwner: false,
