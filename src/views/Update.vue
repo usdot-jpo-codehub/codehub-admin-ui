@@ -22,6 +22,8 @@
       <div class="ch-update--input-checkbox">
         <input type="checkbox" v-model="repoData.enabled" name="add-input-enabled" id="id-add-input-enabled">
         <span>Enabled</span>
+        <input type="checkbox" v-model="repoData.featured" name="add-input-featured" id="id-add-input-featured">
+        <span>Featured</span>
       </div>
       <div class="ch-update--input ch-update--input-disable">
         <label for="id-add-input-name">Name</label>
@@ -73,7 +75,8 @@ export default {
         url: null,
         source: null,
         status: null,
-        enabled: true
+        enabled: true,
+        featured: false
       },
       invalidName: false,
       invalidOwner: false,
@@ -115,6 +118,7 @@ export default {
       this.repoData.name = this.selectedRepo.name;
       this.repoData.owner = this.selectedRepo.owner;
       this.repoData.enabled = this.selectedRepo.enabled;
+      this.repoData.featured = this.selectedRepo.featured;
       this.repoData.repo = this.selectedRepo.owner + '/' + this.selectedRepo.name;
       this.repoData.url = this.selectedRepo.url;
       this.repoData.source = this.selectedRepo.source;
