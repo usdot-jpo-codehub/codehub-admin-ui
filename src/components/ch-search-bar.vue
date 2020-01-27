@@ -41,8 +41,8 @@ export default {
             this.$store.commit('setFilteredRepos', filteredRepos);
           } else {
             let filteredRepos = this.$store.state.repos.filter((item) => {
-              let data = item.name.toLowerCase().match(val.toLowerCase()) ||
-                        item.owner.toLowerCase().match(val.toLowerCase());
+              let data = item.sourceData.name.toLowerCase().match(val.toLowerCase()) ||
+                        item.sourceData.owner.name.toLowerCase().match(val.toLowerCase());
               return data;
             });
             this.$store.commit('setFilteredRepos', filteredRepos);
