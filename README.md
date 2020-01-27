@@ -48,6 +48,11 @@ docker run --rm -d -p 8097:80 \
 ```
 
 ## Release History
+* 2.0.0
+  * Adjustments in the data layer due a consolidation of Indexes in ElasticSearch that modified the structure of the provided data in the CodeHub-Admin-API.
+  * Addition of flags:
+    * visible: Makes a repository visible in the main user interface.
+    * ingested: Inform whether the repository was ever ingested.
 * 1.0.0
   * Initial version
 

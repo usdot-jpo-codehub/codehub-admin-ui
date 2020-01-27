@@ -36,6 +36,9 @@ export default {
           this.filterTxt = val;
           if (val === '') {
             this.$store.commit('setFilteredRepos', []);
+          } if(val[0] === ':') {
+            let filteredRepos = this.filterByField(val);
+            this.$store.commit('setFilteredRepos', filteredRepos);
           } else {
             let filteredRepos = this.$store.state.repos.filter((item) => {
               let data = item.name.toLowerCase().match(val.toLowerCase()) ||
@@ -74,6 +77,23 @@ export default {
         });
       }
       
+    },
+    filterByField: function(val) {
+      let parts = val.split(':');
+      if(parts.length == 3) {
+        let prop = parts[1];
+        let val = parts[2];
+        let data = this.$store.state.repos.filter((item) => {
+          let result = false;
+          if (item.hasOwnProperty(prop)) {
+            let propVal = item[prop]+"";
+            result = propVal.toLowerCase().match(val.toLowerCase());
+          }
+          return result;
+        });
+        return data;
+      }
+      return [];
     }
   }
 }
