@@ -1,13 +1,14 @@
 .ch-field--wrapper {
   display: flex;
   flex-direction: row;
-  flex-flow: wrap;
+  flex-wrap: wrap;
   justify-content: flex-start;
   align-content: center;
+  align-items: center;
   margin-left: units(1);
   margin-right: units(1);
-  margin-top: units(1);
-  margin-bottom: units(1);
+  margin-top: units(0.5);
+  margin-bottom: units(0.5);
   .ch-field--label {
     align-self: flex-end;
     font-size: units(1.5);
@@ -18,8 +19,11 @@
   .ch-field--value {
     color: $ch-color-black;
   }
-  .ch-field--value-small {
+  .ch-field--value-smaller {
     font-size: units(1);
+  }
+  .ch-field--value-small {
+    font-size: units(1.5);
   }
   .ch-field--value-medium {
     font-size: units(2);
@@ -45,6 +49,9 @@
   }
   .ch-field--value-gray {
     color: $ch-color-dark-gray;
+  }
+  .ch-field--value-lightgray {
+    color: $ch-color-gray;
   }
   .ch-field--value-black {
     color: $ch-color-black;

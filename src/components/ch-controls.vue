@@ -10,8 +10,10 @@
   </div>
 </template>
 <script>
+import CHMixin from '@/mixins/ch-mixin.js';
 export default {
   name: "CHControls",
+  mixins: [CHMixin],
   methods: {
     reloadClicked: function() {
       this.$store.dispatch('getAll');
@@ -46,13 +48,6 @@ export default {
     },
     getSelectedRepos: function() {
       return this.$store.state.repos.filter( (x) => { return x.selected;});
-    },
-    clearActionState: function() {
-      this.$store.commit('setIsProcessing', false);
-      this.$store.commit('setProcessingId', '');
-      this.$store.commit('setSelectedRepos', []);
-      this.$store.commit('setProcessingError', false);
-      this.$store.commit('setProcessingMessage', '');
     }
 
   }

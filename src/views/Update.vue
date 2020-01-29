@@ -3,8 +3,8 @@
     <div class="ch-update--wrapper-v">
       
       <h1>Update Repository</h1>
-      <div v-if="processingError" :class="processingError ? 'ch-update--message-alert':''">
-        <span>{{processingMessage}}</span>
+      <div v-if="processingError || error" :class="processingError || error ? 'ch-update--message-alert':''">
+        <span>{{processingMessage + message}}</span>
       </div>
       <div v-if="processing" :class="processing ? 'ch-update--message-action':''">
         <span>{{message}}</span>
@@ -54,7 +54,18 @@
           <option value="inactive" selected>inactive</option>
         </select>
       </div>
-      
+      <div class="ch-update--categories">
+        <div :class="invalidCategories ? 'ch-update-categories-list ch-update--input-alert' : 'ch-update-categories-list'">
+          <label>Categories</label>
+          <ul>
+            <li v-for="(item,index) in repoCategories" :key="index">
+              <input type="checkbox" v-model="item.selected">
+              {{item.name}}
+              <label>({{item.id}})</label>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
     
   </div>
@@ -74,7 +85,9 @@ export default {
       invalidRepo: false,
       invalidUrl: false,
       invalidSource: false,
-      invalidStatus: false
+      invalidStatus: false,
+      invalidCategories: false,
+      repoCategories: []
     }
   },
   computed: {
@@ -105,6 +118,23 @@ export default {
   created: function() {
     if (this.$store.state.selected_repos.length > 0){
       this.selectedRepo = this.$store.state.selected_repos[0];
+      let categories = [...this.$store.state.categories.filter(x => x.isEnabled)];
+      categories.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1);
+      categories.forEach(x => x.selected = false);
+      if (!this.selectedRepo.codehubData.categories || this.selectedRepo.codehubData.categories.length==0) {
+        this.repoCategories = categories;
+        return;
+      }
+
+      for(let i=0; i<this.selectedRepo.codehubData.categories.length; i++) {
+        let cat = this.selectedRepo.codehubData.categories[i];
+        let filCat = categories.filter(x => x.id == cat.id);
+        if (filCat.length > 0)
+        {
+          filCat[0].selected = true;
+        }
+      }
+      this.repoCategories = categories;
     }
   },
   methods: {
@@ -119,11 +149,13 @@ export default {
       this.invalidUrl = !this.selectedRepo.sourceData.repositoryUrl || this.selectedRepo.sourceData.repositoryUrl ==='';
       this.invalidSource = !this.selectedRepo.codehubData.source || this.selectedRepo.codehubData.source ==='';
       this.invalidStatus = !this.selectedRepo.codehubData.badges.status || this.selectedRepo.codehubData.badges.status ==='';
+      this.invalidCategories = this.repoCategories.filter(x => x.selected).length === 0;
 
-      this.error = this.invalidSource || this.invalidOwner || this.invalidUrl || this.invalidSource || this.invalidStatus;
+      this.error = this.invalidSource || this.invalidOwner || this.invalidUrl || this.invalidSource || this.invalidStatus || this.invalidCategories;
       if (this.error) {
         this.message = 'Invalid field value.'
       } else if (!this.invalidConfirmation) {
+        this.selectedRepo.codehubData.categories = this.repoCategories.map( x => x.selected ? x.id : null).filter(x => x != null);
         let transacData = {
           data: this.selectedRepo,
           id: 'Update'

@@ -44,7 +44,9 @@ export default {
     },
     sizeClass : {
       get: function() {
-        if (this.size === 'small') {
+        if (this.size === 'smaller') {
+          return 'ch-field--value-smaller';
+        } else if (this.size === 'small') {
           return 'ch-field--value-small';
         } else if (this.size === 'large') {
           return 'ch-field--value-large';
@@ -70,6 +72,8 @@ export default {
           return 'ch-field--value-navy'
         } else if (this.color === 'gray') {
           return 'ch-field--value-gray'
+        } else if (this.color === 'lighgray') {
+          return 'ch-field--value-lightgray'
         } else {
           return 'ch-field--value-black';
         }

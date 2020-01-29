@@ -34,6 +34,11 @@
       label, input {
         display:block;
       }
+      textarea {
+        width: 100%;
+        height: units(5);
+        font-size: units(1.5);
+      }
       ::-webkit-input-placeholder { /* Edge */
         color: $ch-color-dark-gray;
         font-size: units(1.5);
@@ -77,7 +82,7 @@
       }
     }
     .ch-add--input-alert {
-      input, select {
+      input, select, ul {
         border: solid 1px $ch-color-red;
         border-radius: units(0.5);
       }
@@ -97,6 +102,33 @@
         margin-left: units(0.5);
         &:hover {
           border-color: $ch-color-dark-gray;
+        }
+      }
+    }
+    .ch-add--categories {
+      margin-bottom: units(5);
+      label {
+        color: $ch-color-dark-gray;
+        font-size: units(1.5);
+        margin-bottom: units(0.5);
+      }
+      .ch-add--categories-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: left;
+        text-align: left;
+        ul {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          li{
+            font-size: units(2);
+            margin-bottom: units(0.5);
+            input{
+              margin-right: units(0.5);
+            }
+          }
         }
       }
     }
