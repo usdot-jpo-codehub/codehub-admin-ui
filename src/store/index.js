@@ -282,7 +282,11 @@ export default new Vuex.Store({
           }
         }
       })
-      .catch( e => console.log(e))
+      .catch( (error) => {
+        commit('setProcessingError', true);
+        commit('setProcessingMessage', error);
+        commit('setIsProcessing', false);
+      })
     },
     addCategory({commit, state}, transacData) {
       commit('setProcessingId', transacData.id);
