@@ -1,7 +1,7 @@
 <template>
   <div class="ch-remove--wrapper-h">
     <div class="ch-remove--wrapper-v">
-      <h1>Remove Repository</h1>
+      <h1>Remove Category</h1>
       <div v-if="processingError" :class="processingError ? 'ch-remove--message-alert':''">
         <span>{{processingMessage}}</span>
       </div>
@@ -10,31 +10,24 @@
       </div>
       <hr v-if="processing || error">
       <div class="ch-remove--message">
-        <p>The following repositories are going to be removed from CodeHub.</p>
+        <p>The following category is going to be removed from CodeHub and the Repositories.</p>
         <p>Type the word "Delete" in the next input box and press the "Remove" button to confirm.</p>
       </div>
       <div :class="invalidConfirmation ? 'ch-remove--controls ch-remove--controls-alert' : 'ch-remove--controls'">
         <input type="text" v-model="confirmation" name="ch-remove-confirmation" id="id-ch-remove-confirmation" placeholder="Confirmation...">
         <button v-on:click="removeClicked">Remove</button>
         <button v-on:click="cancelClicked">Cancel</button>
-        <span class="ch-remove--label">Total: {{selectedRepos.length}}</span>
       </div>
       <div class="ch-remove--repos">
-        <ul>
-          <li v-for="(item, index) in selectedRepos" :key="index">
-            <CHRepo :data="item" :index="index" :hideControls="true" />
-          </li>
-        </ul>
+         <CHCategory v-if="selectedCategory" :data="selectedCategory" :hideControls="true" />
       </div>
-      
-
     </div>
   </div>
 </template>
 <script>
-import CHRepo from '@/components/ch-repo.vue';
+import CHCategory from '@/components/ch-category.vue';
 export default {
-  name: 'remove',
+  name: 'CategoriesRemove',
   data: function() {
     return {
       message: '',
@@ -44,11 +37,11 @@ export default {
     }
   },
   components: {
-    CHRepo
+    CHCategory
   },
   computed: {
-    selectedRepos: {
-      get: function() { return this.$store.state.selected_repos; }
+    selectedCategory: {
+      get: function() { return this.$store.state.selected_category; }
     },
     processing: {
       get: function() {return this.$store.state.is_processing; },
@@ -68,7 +61,7 @@ export default {
   watch: {
     processing: function(newValue, oldValue) {
       if (oldValue && !newValue) {
-        if (this.processingId === 'Delete') {
+        if (this.processingId === 'RemoveCategory') {
           this.closeView();
         }
       }
@@ -80,14 +73,14 @@ export default {
       if(!this.invalidConfirmation) {
 
         let transacData = {
-          data: [...this.selectedRepos],
-          id: 'Delete'
+          data: this.selectedCategory,
+          id: 'RemoveCategory'
         };
-        this.$store.dispatch('deleteRepo', transacData);
+        this.$store.dispatch('removeCategory', transacData);
       }
     },
     cancelClicked: function() {
-      this.$router.push({path: '/'});
+      this.$router.push({path: '/categories'});
     },
     closeView: function() {
       if (!this.$store.state.processing_error) {
@@ -95,9 +88,8 @@ export default {
         this.message = 'Processing...';
         setTimeout(()=>{
           this.message ='Done!';
-          this.$store.dispatch('getAll');
-          this.$router.push({path: '/'});
-        }, 1500);
+          this.$router.push({path: '/categories'});
+        }, 500);
       }
     }
   }

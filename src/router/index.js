@@ -34,6 +34,32 @@ const routes = [
     path: '/reset',
     name: 'reset',
     component: () => import('../views/Reset.vue')
+  },
+  {
+    path: '/categories',
+    components: { default: () => import('../views/categories.vue')},
+    children: [
+      {
+        path: '',
+        name: 'categories-home',
+        components: { categories: () => import('../views/categories/categories_home.vue')}
+      },
+      {
+        path: '/categories/add',
+        name: 'categories-add',
+        components: { categories: () => import('../views/categories/categories_add.vue')}
+      },
+      {
+        path: '/categories/remove',
+        name: 'categories-remove',
+        components: { categories: () => import('../views/categories/categories_remove.vue')}
+      },
+      {
+        path: '/categories/update',
+        name: 'categories-update',
+        components: { categories: () => import('../views/categories/categories_update.vue')}
+      }
+    ]
   }
   
   

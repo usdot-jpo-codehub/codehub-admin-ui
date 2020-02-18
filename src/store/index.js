@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     repos: [],
     selected_repos: [],
+    selected_category: null,
     filtered_repos: [],
     filter_text: '',
     filter_by: 'byName',
@@ -19,7 +20,9 @@ export default new Vuex.Store({
     processing_id: null,
     is_mobile: false,
     auth_token: '',
-    version: JSON.parse(unescape(process.env.VUE_APP_PACKAGE_JSON || '%7Bversion%3A0%7D')).version
+    version: JSON.parse(unescape(process.env.VUE_APP_PACKAGE_JSON || '%7Bversion%3A0%7D')).version,
+    categories: [],
+    categoryFilter: ''
   },
   mutations: {
     setRepos(state, val) {
@@ -54,6 +57,15 @@ export default new Vuex.Store({
     },
     setAuthToken(state, val) {
       state.auth_token = val;
+    },
+    setCategories(state, val) {
+      state.categories = val;
+    },
+    setSelectedCategory(state, val) {
+      state.selected_category = val;
+    },
+    setCategoryFilter(state, val) {
+      state.categoryFilter = val;
     }
   },
   actions: {
@@ -74,12 +86,30 @@ export default new Vuex.Store({
         url: '/api/v1/repositories'
       });
 
-      Promise.all([repositories]).then( response => {
+      const categories = axios({
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'CHTOKEN': state.auth_token
+        },
+        crossDomain: true,
+        url: '/api/v1/configurations/categories'
+      });
+
+      Promise.all([repositories, categories]).then( response => {
         let reposResp = response[0];
-        if (Utils.validResponse(reposResp)) {
+        let categoriesResp = response[1];
+        if (Utils.validResponse(reposResp) && Utils.validResponse(categoriesResp)) {
+          let categoriesData = [...categoriesResp.data.result];
+          for(let i = 0; i<categoriesData.length; i++) {
+            categoriesData[i].selected = false;
+          }
+          commit('setCategories', categoriesData);
+
           let reposData = [...reposResp.data.result];
           for(let i=0; i<reposData.length; i++){
             reposData[i].selected = false;
+            reposData[i] = Utils.resolveCategories(reposData[i], categoriesData);
           }
           commit('setRepos', reposData);
         }
@@ -231,6 +261,119 @@ export default new Vuex.Store({
         commit('setProcessingMessage', error);
         commit('setIsProcessing', false);
       })
+    },
+    getCategories({commit, state}) {
+      commit('setCategories', []);
+      let options =  {
+        headers: {
+          'Content-Type':'application/json',
+          'CHTOKEN': state.auth_token
+        }
+      };
+      axios
+      .get('/api/v1/configurations/categories', options)
+      .then( response => {
+        if (response.data.code == 200) {
+          if (response.data.result) {
+            for(let i = 0; i<response.data.result.length; i++) {
+              response.data.result[i].selected = false;
+            }
+            commit('setCategories', response.data.result);
+          }
+        }
+      })
+      .catch( e => console.log(e))
+    },
+    addCategory({commit, state}, transacData) {
+      commit('setProcessingId', transacData.id);
+      commit('setIsProcessing', true);
+      commit('setProcessingError', false);
+      commit('setProcessingMessage', 'Processing...')
+
+      let options = {
+        headers: {
+          'Content-Type': 'application/json',
+          'CHTOKEN': state.auth_token
+        },
+        crossDomain: true
+      }
+
+      axios
+      .post('/api/v1/configurations/categories', transacData.data, options)
+      .then( response => {
+        if (!Utils.validResponse(response)) {
+          let msg = Utils.getErrorMessages(response);
+          commit('setProcessingError', true);
+          commit('setProcessingMessage', msg);
+        }
+        commit('setIsProcessing', false);
+      })
+      .catch( (error) => {
+        commit('setProcessingError', true);
+        commit('setProcessingMessage', error);
+        commit('setIsProcessing', false);
+      });
+    },
+    removeCategory({commit, state}, transacData) {
+      commit('setProcessingId', transacData.id);
+      commit('setIsProcessing', true);
+      commit('setProcessingError', false);
+      commit('setProcessingMessage', 'Processing...')
+
+      let options = {
+        headers: {
+          'Content-Type': 'application/json',
+          'CHTOKEN': state.auth_token
+        },
+        crossDomain: true
+      }
+
+      axios
+      .delete(`/api/v1/configurations/categories/${transacData.data.id}`, options)
+      .then( response => {
+        if (!Utils.validResponse(response)) {
+          let msg = Utils.getErrorMessages(response);
+          commit('setProcessingError', true);
+          commit('setProcessingMessage', msg);
+        }
+        commit('setIsProcessing', false);
+      })
+      .catch( (error) => {
+        commit('setProcessingError', true);
+        commit('setProcessingMessage', error);
+        commit('setIsProcessing', false);
+      });
+    },
+    updateCategory({commit, state}, transacData) {
+      commit('setProcessingId', transacData.id);
+      commit('setIsProcessing', true);
+      commit('setProcessingError', false);
+      commit('setProcessingMessage', 'Processing...')
+
+      let options = {
+        headers: {
+          'Content-Type': 'application/json',
+          'CHTOKEN': state.auth_token
+        },
+        crossDomain: true
+      }
+
+      axios
+      .put('/api/v1/configurations/categories', transacData.data, options)
+      .then( response => {
+        if (!Utils.validResponse(response)) {
+          let msg = Utils.getErrorMessages(response);
+          commit('setProcessingError', true);
+          commit('setProcessingMessage', msg);
+        }
+        commit('setIsProcessing', false);
+      })
+      .catch( (error) => {
+        commit('setProcessingError', true);
+        commit('setProcessingMessage', error);
+        commit('setIsProcessing', false);
+      });
     }
   }
+
 })

@@ -28,5 +28,20 @@ export default {
       let sourceList = [];
       sourceList.push({name:'github', value:'github'});
       return sourceList;
+    },
+    resolveCategories(repository, categories) {
+      if (!repository || !repository.codehubData || !repository.codehubData.categories || repository.codehubData.categories.length == 0 ) {
+        return repository;
+      }
+
+      for(let i=0; i<repository.codehubData.categories.length; i++){
+        let repoCatId = repository.codehubData.categories[i];
+        let cat = categories.filter(x => x.id == repoCatId )
+        if (cat.length == 0) {
+          continue;
+        }
+        repository.codehubData.categories[i] = cat[0];
+      }
+      return repository;
     }
 }

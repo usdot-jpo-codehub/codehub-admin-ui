@@ -1,5 +1,11 @@
 .ch-home--wrapper {
   background-color: $ch-color-background;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  justify-items: flex-start;
+  align-items: center;
+  align-content: center;
   .ch-home--result {
 
     ul {

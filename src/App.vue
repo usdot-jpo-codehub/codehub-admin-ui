@@ -23,7 +23,6 @@ export default {
     if(this.$store.state.isMobile != isMobile){
       this.$store.commit('setIsMobile', isMobile);
     }
-    this.$store.dispatch('getAll');
   },
   watch: {
     $route: function(to) {
