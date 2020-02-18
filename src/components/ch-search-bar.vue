@@ -91,7 +91,6 @@ export default {
           let propertyVal = this.getPropertyValue(item, prop);
           if (propertyVal) {
             result = propertyVal.toLowerCase().match(v.toLowerCase());
-            console.log('propertyVal',propertyVal,'v',v,'result', result);
           }
           return result;
         });
