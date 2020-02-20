@@ -41,6 +41,18 @@
         <label for="id-add-input-owner">Owner</label>
         <input disabled type="text" v-model="newRepo.sourceData.owner.name" name="add-input-owner" id="id-add-input-owner" placeholder="Computed from URL...">
       </div>
+      <div class="ch-add--categories">
+        <div :class="invalidCategories ? 'ch-add--categories-list ch-add--input-alert' : 'ch-add--categories-list'">
+          <label>Categories</label>
+          <ul>
+            <li v-for="(item,index) in repoCategories" :key="index">
+              <input type="checkbox" v-model="item.selected">
+              {{item.name}}
+              <label>({{item.id}})</label>
+            </li>
+          </ul>
+        </div>
+      </div>
       <div class="ch-add--controls">
         <button v-on:click="okClicked">Ok</button>
         <button v-on:click="cancelClicked">Cancel</button>
@@ -58,6 +70,7 @@ export default {
     return {
       message: '',
       error: false,
+      repoCategories: [],
       newRepo: {
         sourceData: {
           name: null,
@@ -74,18 +87,22 @@ export default {
           badges: {
             status: 'pending',
             isFeatured: false,
-          }
+          },
+          categories: [],
+          lastModified: null
         }
       },
       invalidName: false,
       invalidOwner: false,
       invalidUrl: false,
       invalidSource: false,
-      invalidStatus: false
+      invalidStatus: false,
+      invalidCategories: false
     }
   },
   created: function() {
-    
+    this.repoCategories = this.$store.state.categories.filter(x => x.isEnabled);
+    this.repoCategories.forEach(x => x.selected = false);
   },
   computed: {
     statuses: {
@@ -128,11 +145,13 @@ export default {
       this.invalidUrl = !this.newRepo.sourceData.repositoryUrl || this.newRepo.sourceData.repositoryUrl ==='';
       this.invalidSource = !this.newRepo.codehubData.source || this.newRepo.codehubData.source ==='';
       this.invalidStatus = !this.newRepo.codehubData.badges.status || this.newRepo.codehubData.badges.status ==='';
+      this.invalidCategories = this.repoCategories.filter( x => x.selected).length === 0;
 
-      this.error = this.invalidSource || this.invalidOwner || this.invalidUrl || this.invalidSource || this.invalidStatus;
+      this.error = this.invalidSource || this.invalidOwner || this.invalidUrl || this.invalidSource || this.invalidStatus || this.invalidCategories;
       if (this.error) {
         this.message = 'Invalid field value.'
       } else {
+        this.newRepo.codehubData.categories = this.repoCategories.map( x => x.selected ? x.id : null).filter(x => x != null);
         let transacData = {
           data: this.newRepo,
           id: 'Add'

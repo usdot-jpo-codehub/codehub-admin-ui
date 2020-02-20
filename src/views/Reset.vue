@@ -22,7 +22,7 @@
       <div class="ch-reset--repos">
         <ul>
           <li v-for="(item, index) in selectedRepos" :key="index" >
-            <CHRepo :data="item" :index="index" />
+            <CHRepo :data="item" :index="index" :hideControls="true" />
           </li>
         </ul>
       </div>

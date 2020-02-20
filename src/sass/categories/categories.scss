@@ -1,0 +1,50 @@
+.categories_wrapper {
+  background-color: $ch-color-background;
+  .categories_controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: units(3);
+    padding-top: units(1);
+    padding-bottom: units(0.5);
+    
+    button {
+      width: units(15);
+      margin-left: units(1.5);
+      border-radius: units(0.5);
+      border-color:$ch-color-gray;
+      border-width: 1px;
+      font-weight: normal;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.3s;
+      &:hover {
+        border-color: $ch-color-navy;
+        font-weight: bold;
+      }
+      &:disabled {
+        border-color: $ch-color-gray;
+        font-weight: normal;
+        color: $ch-color-gray;
+      }
+    }
+
+    input {
+      margin-left: units(1.5);
+      border-radius: units(0.5);
+      border-color:$ch-color-gray;
+      border-width: 1px;
+      font-weight: normal;
+      height: units(3);
+      width: units('card-lg');
+    }
+  }
+  .categories_router-view {
+    margin-top: units(1);
+    padding-top: units(0.5);
+    padding-left: units(0.5);
+    padding-right: units(0.5);
+    
+  }
+}

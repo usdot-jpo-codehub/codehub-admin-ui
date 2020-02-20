@@ -13,6 +13,9 @@
 @import './remove.scss';
 @import './reset.scss';
 @import './update.scss';
+@import './categories/categories.scss';
+@import './categories/categories-home.scss';
+@import './categories/ch-category.scss';
 
 html, body {
   scrollbar-width: none;
