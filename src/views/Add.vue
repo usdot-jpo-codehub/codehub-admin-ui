@@ -105,22 +105,22 @@ export default {
     this.repoCategories.forEach(x => x.selected = false);
   },
   computed: {
-    statuses: {
-      get: function() {return Utils.getStatusList();}
-    },
     sources: {
       get: function() {return Utils.getSourceList();}
+    },
+    statuses: {
+      get: function() {return Utils.getStatusList();}
     },
     processing: {
       get: function() {return this.$store.state.is_processing; },
       set: function(val) { this.$store.commit('setIsProcessing', val)}
     },
+    processingError: {
+      get: function() {return this.$store.state.processing_error; }
+    },
     processingMessage: {
       get: function() {return this.$store.state.processing_message;},
       set: function(val) {this.$store.state.processing_message = val;}
-    },
-    processingError: {
-      get: function() {return this.$store.state.processing_error; }
     },
     processingId: {
       get: function() {return this.$store.state.processing_id; }

@@ -1,3 +1,18 @@
+@mixin default-button {
+  width: units(15);
+  border-color: $ch-color-gray;
+  border-radius: units(1);
+  margin-right: units(0.5);
+  margin-left: units(0.5);
+  &:hover {
+    border-color: $ch-color-dark-gray;
+  }
+  &:disabled {
+    background-color: $ch-color-gray;
+    border-color: $ch-color-gray;
+  }
+}
+
 .ch-add--wrapper-h {
   display: flex;
   flex-direction: row;
@@ -10,6 +25,47 @@
     align-content: flex-start;
     flex: 0.5;
     max-width: units('mobile-lg');
+    .ch-add--img {
+      width: units(9);
+      height: auto;
+      flex-grow: 0;
+      flex-shrink: 0;
+      margin: units(1);
+    }
+    .ch-add--flex-row {
+      display: flex;
+      flex-direction: row;
+      align-content: center;
+      align-items: center;
+      &.ch-add--flex-start {
+        justify-content: flex-start;
+      }
+    }
+
+    .ch-add--popular-image {
+      align-self: flex-end;
+    }
+
+    .ch-add--popular-controls {
+      flex:1;
+      align-self:flex-end;
+      button {
+        align-self: center;
+        background: $ch-color-white;
+        height: units(3)+units(0.5);
+        width: auto;
+        margin-top: units(1);
+        margin-right: units(0.5);
+      }
+
+      input {
+        &:disabled {
+          color: $ch-color-dark-gray;
+          font-size: small;
+        }
+      }
+    }
+
     .ch-add--message-alert {
       color: $ch-color-dark-red;
       font-size: units(1.5);
@@ -19,14 +75,18 @@
       font-size: units(1.5);
     }
     .ch-add--input {
+      flex: 1;
       margin-bottom: units(1);
       label {
         color: $ch-color-dark-gray;
         font-size: units(1.5);
+        flex: 0 1 auto;
       }
       input {
         border: solid 1px $ch-color-gray;
         border-radius: units(0.5);
+        height: units(3)+units(0.5);
+        flex: 1;
       }
       input, select {
         width: 100%;
@@ -95,14 +155,7 @@
       align-content: center;
       margin-top: units(1.5);
       button {
-        width: units(15);
-        border-color: $ch-color-gray;
-        border-radius: units(1);
-        margin-right: units(0.5);
-        margin-left: units(0.5);
-        &:hover {
-          border-color: $ch-color-dark-gray;
-        }
+        @include default-button();
       }
     }
     .ch-add--categories {

@@ -16,13 +16,15 @@
 @import './categories/categories.scss';
 @import './categories/categories-home.scss';
 @import './categories/ch-category.scss';
+@import './categories/category-image.scss';
+@import './categories/ch-category-image-selector.scss';
 
 html, body {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  // scrollbar-width: none;
+  // -ms-overflow-style: none;
   background-color: $ch-color-background;
 }
-::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
-}
+// ::-webkit-scrollbar {
+//   width: 0px;
+//   background: transparent;
+// }

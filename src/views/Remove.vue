@@ -50,19 +50,19 @@ export default {
     selectedRepos: {
       get: function() { return this.$store.state.selected_repos; }
     },
-    processing: {
-      get: function() {return this.$store.state.is_processing; },
-      set: function(val) { this.$store.commit('setIsProcessing', val)}
-    },
     processingMessage: {
       get: function() {return this.$store.state.processing_message;},
       set: function(val) {this.$store.state.processing_message = val;}
     },
-    processingError: {
-      get: function() {return this.$store.state.processing_error; }
+    processing: {
+      get: function() {return this.$store.state.is_processing; },
+      set: function(val) { this.$store.commit('setIsProcessing', val)}
     },
     processingId: {
       get: function() {return this.$store.state.processing_id; }
+    },
+    processingError: {
+      get: function() {return this.$store.state.processing_error; }
     }
   },
   watch: {

@@ -48,6 +48,8 @@ docker run --rm -d -p 8097:80 \
 ```
 
 ## Release History
+* 3.1.0
+  * Support for Categories and Popular Categories.
 * 2.0.0
   * Adjustments in the data layer due a consolidation of Indexes in ElasticSearch that modified the structure of the provided data in the CodeHub-Admin-API.
   * Addition of flags:

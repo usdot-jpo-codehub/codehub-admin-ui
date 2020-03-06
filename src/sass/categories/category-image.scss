@@ -1,0 +1,28 @@
+.ch-category-image_wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  margin: units(0.5);
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+  button {
+    background-color: $ch-color-white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    height: units(10)+units(1);
+    img {
+      height: auto;
+      width: units(8);
+    }
+    span {
+      font-size: x-small;
+    }
+  }
+  &.ch-category-image_selected {
+    box-shadow: 2px 2px 2px rgba(22,46,81,0.3);
+  }
+}
