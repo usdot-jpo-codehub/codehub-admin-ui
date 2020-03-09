@@ -31,7 +31,7 @@
           </div>
           <div :class="invalidOrder ? 'ch-add--input ch-add--input-alert' : 'ch-add--input'">
             <label for="id-add-input-order">Order</label>
-            <input :disabled="!selectedCategory.isPopular" type="text" v-model="selectedCategory.orderPopular" name="add-input-order" id="id-add-input-order"  placeholder="Category popular order...">
+            <input :disabled="!selectedCategory.isPopular" type="text" v-model="selectedCategory.orderPopular" name="add-input-order" id="id-add-input-order"  placeholder="">
           </div>
         </div>
         <div class="ch-add--flex-row">
