@@ -41,14 +41,25 @@
         justify-content: flex-start;
       }
     }
-
-    .ch-add--popular-image {
-      align-self: flex-end;
+    .ch-add--flex-column {
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      align-items: center;
+      &.ch-add--flex-start {
+        justify-content: flex-start;
+      }
     }
 
     .ch-add--popular-controls {
       flex:1;
-      align-self:flex-end;
+      .ch-add--popular-image {
+        align-self: flex-end;
+      }
+      .ch-add--label {
+        font-size: units(1.5);
+        color: $ch-color-dark-gray;
+      }
       button {
         align-self: center;
         background: $ch-color-white;
@@ -62,6 +73,10 @@
         &:disabled {
           color: $ch-color-dark-gray;
           font-size: small;
+        }
+        &#id-add-input-order {
+          width: units(5);
+          text-align: center;
         }
       }
     }

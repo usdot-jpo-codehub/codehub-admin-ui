@@ -21,24 +21,25 @@
         <label for="id-add-input-description">Description</label>
         <textarea v-model="newCategory.description" name="add-input-description" id="id-add-input-description" placeholder="Category description..."></textarea>
       </div>
-      <div class="ch-add--flex-row">
-        <img class="ch-add--img ch-add--popular-image" v-on:click="selectImage" :disabled="!newCategory.isPopular" :src="newCategory.imageFileName ? newCategory.imageFileName : imageOnError" alt="Category image" @error="imageOnError">
-        <div class="ch-add--popular-controls">
-          <div class="ch-add--flex-row ch-add--flex-start">
-            <div class="ch-add--input-checkbox">
-              <input type="checkbox" v-model="newCategory.isPopular" @change="isPopularChanged" name="add-input-enabled" id="id-add-input-enabled">
-              <span>Popular</span>
-            </div>
-            <div :class="invalidOrder ? 'ch-add--input ch-add--input-alert' : 'ch-add--input'">
-              <label for="id-add-input-order">Order</label>
-              <input :disabled="!newCategory.isPopular" type="text" v-model="newCategory.orderPopular" name="add-input-order" id="id-add-input-order"  placeholder="Category popular order...">
-            </div>
+      <div class="ch-add--popular-controls">
+        <div class="ch-add--flex-row">
+          <div class="ch-add--input-checkbox">
+            <input type="checkbox" v-model="newCategory.isPopular" @change="isPopularChanged" name="add-input-enabled" id="id-add-input-enabled">
+            <span>Popular</span>
           </div>
-          <div class="ch-add--flex-row">
-            <div class="ch-add--input ch-add--input-disable">
-              <label for="id-add-input-image-file-name">Image file name</label>
-              <input :disabled="true" type="text" v-model="newCategory.imageFileName" name="add-input-image-file-name" id="id-add-input-image-file-name" placeholder="Category image file name...">
-            </div>
+          <div :class="invalidOrder ? 'ch-add--input ch-add--input-alert' : 'ch-add--input'">
+            <label for="id-add-input-order">Order</label>
+            <input :disabled="!newCategory.isPopular" type="text" v-model="newCategory.orderPopular" name="add-input-order" id="id-add-input-order"  placeholder="">
+          </div>
+        </div>
+        <div class="ch-add--flex-row">
+          <div class="ch-add--flex-column">
+            <span class="ch-add--label">Image</span>
+            <img class="ch-add--img ch-add--popular-image" v-on:click="selectImage" :disabled="!newCategory.isPopular" :src="newCategory.imageFileName ? newCategory.imageFileName : imageOnError" alt="Category image" @error="imageOnError">
+          </div>
+          <div class="ch-add--input ch-add--input-disable">
+            <label for="id-add-input-image-file-name">File name</label>
+            <input :disabled="true" type="text" v-model="newCategory.imageFileName" name="add-input-image-file-name" id="id-add-input-image-file-name" placeholder="Category image file name...">
           </div>
         </div>
       </div>
