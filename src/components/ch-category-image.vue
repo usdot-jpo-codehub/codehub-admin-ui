@@ -1,9 +1,8 @@
 <template>
   <div class="ch-category-image_wrapper">
-      <button v-on:click="imageClicked">
-        <img :src="data.image" :alt="data.image">
-        <span>{{imageName}}</span>
-      </button>
+      <a v-on:click="imageClicked">
+        <img :src="data.image" :alt="imageName" :title="imageName">
+      </a>
   </div>
 </template>
 <script>
