@@ -22,7 +22,8 @@ export default new Vuex.Store({
     auth_token: '',
     version: JSON.parse(unescape(process.env.VUE_APP_PACKAGE_JSON || '%7Bversion%3A0%7D')).version,
     categories: [],
-    categoryFilter: ''
+    categoryFilter: '',
+    categoryImages: []
   },
   mutations: {
     setRepos(state, val) {
@@ -66,6 +67,9 @@ export default new Vuex.Store({
     },
     setCategoryFilter(state, val) {
       state.categoryFilter = val;
+    },
+    setCategoryImages(state, val) {
+      state.categoryImages = val;
     }
   },
   actions: {
@@ -377,6 +381,29 @@ export default new Vuex.Store({
         commit('setProcessingMessage', error);
         commit('setIsProcessing', false);
       });
+    },
+    fetchCategoryImages({commit, state}) {
+      commit('setCategoryImages', []);
+      let options =  {
+        headers: {
+          'Content-Type':'application/json',
+          'CHTOKEN': state.auth_token
+        }
+      };
+      axios
+      .get('/api/v1/images/categories', options)
+      .then( response => {
+        if (response.data.code == 200) {
+          if (response.data.result) {
+            commit('setCategoryImages', response.data.result);
+          }
+        }
+      })
+      .catch( (error) => {
+        commit('setIsProcessing', false);
+        commit('setProcessingError', true);
+        commit('setProcessingMessage', error);
+      })
     }
   }
 

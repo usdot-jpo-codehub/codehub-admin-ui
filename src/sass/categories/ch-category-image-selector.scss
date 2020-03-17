@@ -1,0 +1,34 @@
+.ch-category-image-selector__wrapper {
+  background-color: $ch-color-white;
+  border: solid 1px $ch-color-gray;
+  border-radius: units(0.5);
+  box-shadow: 2px 2px 1px rgba(0,0,0,0.2);
+  padding: units(1.5);
+  .ch-category-image-selector__images {
+    display: flex;
+    flex-direction: row;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: stretch;
+  }
+  .ch-category-image-selector__image-selected {
+    border: ridge 4px fade-out($ch-color-orange, 0.3);
+  }
+  .ch-category-image-selector__images-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    button {
+      @include default-button();
+      margin-top: units(0.5);
+    }
+  }
+  .ch-category-image-selector__title {
+    font-size: large;
+    color: $ch-color-black;
+    text-shadow: 1px 1px rgba(0,0,0,0.4);
+    margin-bottom: units(1);
+  }
+}
