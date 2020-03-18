@@ -75,6 +75,17 @@ export default {
     }
   },
   methods: {
+    closeView: function() {
+      if (!this.$store.state.processing_error) {
+        this.processing = true;
+        this.message = 'Processing...';
+        setTimeout(()=>{
+          this.message ='Done!';
+          this.$store.dispatch('getAll');
+          this.$router.push({path: '/'});
+        }, 1500);
+      }
+    },
     resetClicked: function() {
       this.invalidConfirmation = this.confirmation != 'Reset';
       if(!this.invalidConfirmation) {
@@ -87,17 +98,6 @@ export default {
     },
     cancelClicked: function() {
       this.$router.push({path: '/'});
-    },
-    closeView: function() {
-      if (!this.$store.state.processing_error) {
-        this.processing = true;
-        this.message = 'Processing...';
-        setTimeout(()=>{
-          this.message ='Done!';
-          this.$store.dispatch('getAll');
-          this.$router.push({path: '/'});
-        }, 1500);
-      }
     }
   }
 }
