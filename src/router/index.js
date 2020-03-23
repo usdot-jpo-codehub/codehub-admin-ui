@@ -60,6 +60,32 @@ const routes = [
         components: { categories: () => import('../views/categories/categories_update.vue')}
       }
     ]
+  },
+  {
+    path: '/engagementpopup',
+    components: { default: () => import('../views/EngagementPopup.vue')},
+    children: [
+      {
+        path: '',
+        name: 'engagementpopup-home',
+        components: { engagementpopup: () => import('../views/engagementpopup/home.vue')}
+      },
+      {
+        path: '/engagementpopup/add',
+        name: 'engagementpopup-add',
+        components: { engagementpopup: () => import('../views/engagementpopup/add.vue')}
+      },
+      {
+        path: '/engagementpopup/remove',
+        name: 'engagementpopup-remove',
+        components: { engagementpopup: () => import('../views/engagementpopup/remove.vue')}
+      },
+      {
+        path: '/engagementpopup/update',
+        name: 'engagementpopup-update',
+        components: { engagementpopup: () => import('../views/engagementpopup/update.vue')}
+      }
+    ]
   }
   
   
