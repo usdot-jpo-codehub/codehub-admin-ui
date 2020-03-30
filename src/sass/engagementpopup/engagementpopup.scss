@@ -1,0 +1,76 @@
+@mixin mix-ch-engagementpopup__controls-color {
+  &.ch-engpop-color-white { color: $ch-color-white; }
+  &.ch-engpop-shadow-white { text-shadow: 0px 0px 2px $ch-color-white; }
+  &.ch-engpop-color-black { color: $ch-color-black; }
+  &.ch-engpop-shadow-black { text-shadow: 0px 0px 2px $ch-color-black; }
+  &.ch-engpop-color-navy { color: $ch-color-navy; }
+  &.ch-engpop-shadow-navy { text-shadow: 0px 0px 2px $ch-color-navy; }
+  &.ch-engpop-color-gray { color: $ch-color-gray; }
+  &.ch-engpop-shadow-gray { text-shadow: 0px 0px 2px $ch-color-gray; }
+  &.ch-engpop-color-darkgray { color: $ch-color-dark-gray; }
+  &.ch-engpop-shadow-darkgray { text-shadow: 0px 0px 2px $ch-color-dark-gray; }
+  &.ch-engpop-color-green { color: $ch-color-green; }
+  &.ch-engpop-shadow-green { text-shadow: 0px 0px 2px $ch-color-green; }
+  &.ch-engpop-color-red { color: $ch-color-red; }
+  &.ch-engpop-shadow-red { text-shadow: 0px 0px 2px $ch-color-red; }
+  &.ch-engpop-color-darkred { color: $ch-color-dark-red; }
+  &.ch-engpop-shadow-darkred { text-shadow: 0px 0px 2px $ch-color-dark-red; }
+  &.ch-engpop-color-blue { color: $ch-color-blue; }
+  &.ch-engpop-shadow-blue { text-shadow: 0px 0px 2px $ch-color-blue; }
+  &.ch-engpop-color-orange { color: $ch-color-orange; }
+  &.ch-engpop-shadow-orange { text-shadow: 0px 0px 2px $ch-color-orange; }
+}
+
+@import './ch-engagementpopup.scss';
+@import './engagementpopup-home.scss';
+@import './engagementpopup-edit.scss';
+.engagementpopup_wrapper {
+  background-color: $ch-color-background;
+  .engagementpopup_controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: units(3);
+    padding-top: units(1);
+    padding-bottom: units(0.5);
+
+    button {
+      width: units(15);
+      margin-left: units(1.5);
+      border-radius: units(0.5);
+      border-color:$ch-color-gray;
+      border-width: 1px;
+      font-weight: normal;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.3s;
+      &:hover {
+        border-color: $ch-color-navy;
+        font-weight: bold;
+      }
+      &:disabled {
+        border-color: $ch-color-gray;
+        font-weight: normal;
+        color: $ch-color-gray;
+      }
+    }
+
+    input {
+      margin-left: units(1.5);
+      border-radius: units(0.5);
+      border-color:$ch-color-gray;
+      border-width: 1px;
+      font-weight: normal;
+      height: units(3);
+      width: units('card-lg');
+    }
+  }
+  .engagementpopup_router-view {
+    margin-top: units(1);
+    padding-top: units(0.5);
+    padding-left: units(0.5);
+    padding-right: units(0.5);
+
+  }
+}
