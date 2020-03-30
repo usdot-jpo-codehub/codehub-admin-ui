@@ -25,6 +25,12 @@
     align-content: flex-start;
     flex: 0.5;
     max-width: units('mobile-lg');
+    &.ch-add--wrapper-v-size-tablet {
+      max-width: units('tablet-lg');
+    }
+    &.ch-add--wrapper-v-size-desktop {
+      max-width: units('desktop');
+    }
     .ch-add--img {
       width: units(9);
       height: auto;
@@ -81,6 +87,10 @@
       }
     }
 
+    .ch-add--message {
+      color: $ch-color-black;
+      font-size: units(2);
+    }
     .ch-add--message-alert {
       color: $ch-color-dark-red;
       font-size: units(1.5);

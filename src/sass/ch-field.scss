@@ -65,6 +65,9 @@
   .ch-field--value-black {
     color: $ch-color-black;
   }
+  .ch-field--value-red {
+    color: $ch-color-red;
+  }
   .ch-field--value-shadow {
     text-shadow: 1px 1px lighten($ch-color-gray, 10%);
   }

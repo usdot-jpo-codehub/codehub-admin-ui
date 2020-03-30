@@ -23,7 +23,10 @@ export default new Vuex.Store({
     version: JSON.parse(unescape(process.env.VUE_APP_PACKAGE_JSON || '%7Bversion%3A0%7D')).version,
     categories: [],
     categoryFilter: '',
-    categoryImages: []
+    categoryImages: [],
+    engagementPopupFilter: '',
+    engagementPopups: [],
+    selectedEngagementPopup: null
   },
   mutations: {
     setRepos(state, val) {
@@ -70,6 +73,15 @@ export default new Vuex.Store({
     },
     setCategoryImages(state, val) {
       state.categoryImages = val;
+    },
+    setEngagementPopupFilter(state, val) {
+      state.engagementPopupFilter = val;
+    },
+    setEngagementPopups(state, val) {
+      state.engagementPopups = val;
+    },
+    setSelectedEngagementPopup(state, val) {
+      state.selectedEngagementPopup = val;
     }
   },
   actions: {
@@ -404,6 +416,126 @@ export default new Vuex.Store({
         commit('setProcessingError', true);
         commit('setProcessingMessage', error);
       })
+    },
+    getEngagementPopups({commit, state}) {
+      commit('setEngagementPopups', []);
+      commit('setSelectedEngagementPopup', null);
+      let options =  {
+        headers: {
+          'Content-Type':'application/json',
+          'CHTOKEN': state.auth_token
+        }
+      };
+      axios
+      .get('/api/v1/configurations/engagementpopups', options)
+      .then( response => {
+        if (response.data.code == 200) {
+          if (response.data.result) {
+            response.data.result.sort((a,b) => {
+              if (a.isActive <= b.isActive) {
+                return 1;
+              }
+              return -1;
+            })
+            commit('setEngagementPopups', response.data.result);
+          }
+        }
+      })
+      .catch( (error) => {
+        commit('setProcessingError', true);
+        commit('setProcessingMessage', error);
+        commit('setIsProcessing', false);
+      })
+    },
+    updateEngagementPopups({commit, state}, transacData) {
+      commit('setProcessingError', false);
+      commit('setProcessingId', transacData.id);
+      commit('setIsProcessing', true);
+      commit('setProcessingMessage', 'Processing...')
+
+      let options = {
+        headers: {
+          'Content-Type': 'application/json',
+          'CHTOKEN': state.auth_token
+        },
+        crossDomain: true
+      }
+
+      axios
+      .put('/api/v1/configurations/engagementpopups', transacData.data, options)
+      .then( response => {
+        if (!Utils.validResponse(response)) {
+          let msg = Utils.getErrorMessages(response);
+          commit('setProcessingError', true);
+          commit('setProcessingMessage', msg);
+        }
+        commit('setIsProcessing', false);
+      })
+      .catch( (error) => {
+        commit('setProcessingError', true);
+        commit('setProcessingMessage', error);
+        commit('setIsProcessing', false);
+      });
+    },
+    addEngagementPopups({commit, state}, transacData) {
+      commit('setProcessingId', transacData.id);
+      commit('setIsProcessing', true);
+      commit('setProcessingError', false);
+      commit('setProcessingMessage', 'Processing...')
+
+      let options = {
+        headers: {
+          'Content-Type': 'application/json',
+          'CHTOKEN': state.auth_token
+        },
+        crossDomain: true
+      }
+
+      axios
+      .post('/api/v1/configurations/engagementpopups', transacData.data, options)
+      .then( response => {
+        if (!Utils.validResponse(response)) {
+          let msg = Utils.getErrorMessages(response);
+          commit('setProcessingError', true);
+          commit('setProcessingMessage', msg);
+        }
+        commit('setIsProcessing', false);
+      })
+      .catch( (error) => {
+        commit('setProcessingError', true);
+        commit('setProcessingMessage', error);
+        commit('setIsProcessing', false);
+      });
+    },
+    removeEngagementPopups({commit, state}, transacData) {
+      commit('setProcessingId', transacData.id);
+      commit('setIsProcessing', true);
+      commit('setProcessingError', false);
+      commit('setProcessingMessage', 'Processing...')
+
+      let options = {
+        headers: {
+          'Content-Type': 'application/json',
+          'CHTOKEN': state.auth_token
+        },
+        crossDomain: true
+      }
+
+      axios
+      .delete(`/api/v1/configurations/engagementpopups/${transacData.data.id}`, options)
+      .then( response => {
+        if (!Utils.validResponse(response)) {
+          let msg = Utils.getErrorMessages(response);
+          commit('setProcessingError', true);
+          commit('setProcessingMessage', msg);
+        }
+        commit('setIsProcessing', false);
+      })
+      .catch( (error) => {
+        commit('setProcessingError', true);
+        commit('setProcessingMessage', error);
+        commit('setIsProcessing', false);
+      });
     }
   }
 
