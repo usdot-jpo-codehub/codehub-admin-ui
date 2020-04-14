@@ -558,7 +558,6 @@ export default new Vuex.Store({
       axios
         .post('/api/v1/invalidate', transacData.data, options)
         .then(response => {
-          console.log(response);
           if (!Utils.validResponse(response)) {
             let msg = Utils.getErrorMessages(response);
             commit('setProcessingError', true);

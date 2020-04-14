@@ -31,7 +31,6 @@ export default {
         };
         this.$store.dispatch('invalidateCloudfrontPath', transacData);
       }
-      console.log(this.cloudfrontInvalidate);
     },
     closeView: function() {
       if (!this.$store.state.processing_error) {
