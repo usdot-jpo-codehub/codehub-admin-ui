@@ -36,6 +36,11 @@ const routes = [
     component: () => import('../views/Reset.vue')
   },
   {
+    path: '/cloudfrontinvalidate',
+    name: 'cloudfrontinvalidate',
+    component: () => import('../views/CloudfrontInvalidate.vue')
+  },
+  {
     path: '/categories',
     components: { default: () => import('../views/categories.vue')},
     children: [
@@ -87,8 +92,6 @@ const routes = [
       }
     ]
   }
-  
-  
 ]
 
 const router = new VueRouter({

@@ -24,6 +24,9 @@
                   <li class="usa-nav__primary-item">
                     <router-link aria-controls="dh-nav1" to="/engagementpopup" exact-active-class="router-link-exact-active" exact>Engagement_Popup</router-link>
                   </li>
+                  <li class="usa-nav__primary-item">
+                    <router-link aria-controls="dh-nav1" to="/cloudfrontinvalidate" exact-active-class="router-link-exact-active" exact>Cloudfront_Invalidate</router-link>
+                  </li>
                 </ul>
               </div>
             </nav>

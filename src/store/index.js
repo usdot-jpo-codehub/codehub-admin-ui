@@ -26,7 +26,8 @@ export default new Vuex.Store({
     categoryImages: [],
     engagementPopupFilter: '',
     engagementPopups: [],
-    selectedEngagementPopup: null
+    selectedEngagementPopup: null,
+    completed: false
   },
   mutations: {
     setRepos(state, val) {
@@ -82,6 +83,9 @@ export default new Vuex.Store({
     },
     setSelectedEngagementPopup(state, val) {
       state.selectedEngagementPopup = val;
+    },
+    setCompleted(state, val) {
+      state.completed = val;
     }
   },
   actions: {
@@ -536,7 +540,37 @@ export default new Vuex.Store({
         commit('setProcessingMessage', error);
         commit('setIsProcessing', false);
       });
+    },
+    invalidateCloudfrontPath({ commit, state }, transacData) {
+      commit('setProcessingId', transacData.id);
+      commit('setIsProcessing', true);
+      commit('setProcessingError', false);
+      commit('setProcessingMessage', 'Processing...')
+
+      let options = {
+        headers: {
+          'Content-Type': 'application/json',
+          'CHTOKEN': state.auth_token
+        },
+        crossDomain: true
+      }
+
+      axios
+        .post('/api/v1/invalidate', transacData.data, options)
+        .then(response => {
+          if (!Utils.validResponse(response)) {
+            let msg = Utils.getErrorMessages(response);
+            commit('setProcessingError', true);
+            commit('setProcessingMessage', msg);
+          }
+          commit('setIsProcessing', false);
+          commit('setCompleted', true);
+        })
+        .catch((error) => {
+          commit('setProcessingError', true);
+          commit('setProcessingMessage', error);
+          commit('setIsProcessing', false);
+        });
     }
   }
-
 })
