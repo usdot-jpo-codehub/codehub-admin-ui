@@ -1,0 +1,11 @@
+.cloudfrontinvalidation_message {
+    word-break: break-word;
+    max-width: units('desktop');
+    margin-left: 20px;
+    &.error {
+        color:red;
+    }
+    &.completed {
+        color: $ch-color-green;
+    }
+}
