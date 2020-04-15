@@ -1,6 +1,6 @@
 .cloudfrontinvalidation_message {
     word-break: break-word;
-    max-width: 800px;
+    max-width: units('desktop');
     margin-left: 20px;
     &.error {
         color:red;
