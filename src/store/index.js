@@ -85,6 +85,11 @@ export default new Vuex.Store({
     },
     setCompleted(state, val) {
       state.completed = val;
+    },
+    setProcessingStatus(state, statusObj) {
+      state.is_processing = statusObj.isProcessing;
+      state.processing_error = statusObj.isError;
+      state.processing_message = statusObj.message;
     }
   },
   actions: {
@@ -123,50 +128,39 @@ export default new Vuex.Store({
     addRepo({commit, state}, transacData) {
       commit('setProcessingId', transacData.id);
 
+      commit('setProcessingStatus',{isProcessing: true, isError: false, message: 'Processing...'});
       const repoConn = utils.getAxios('POST', state.auth_token, transacData.data, '/api/v1/repositories');
 
-      commit('setIsProcessing', true);
-      commit('setProcessingMessage', 'Processing...')
-      commit('setProcessingError', false);
       Promise.all([repoConn]).then( (response) => {
         let repoResp = response[0];
 
         if (!utils.validResponse(repoResp)) {
           let msg = utils.getErrorMessages(repoResp);
-          commit('setProcessingMessage', msg);
-          commit('setProcessingError', true);
+          commit('setProcessingStatus',{isProcessing: false, isError: true, message: msg});
         }
-        commit('setIsProcessing', false);
+        commit('setProcessingStatus',{isProcessing: false, isError: false, message: ''});
 
       }).catch((error) => {
-        commit('setProcessingMessage', error);
-        commit('setIsProcessing', false);
-        commit('setProcessingError', true);
+        commit('setProcessingStatus',{isProcessing: false, isError: true, message: error});
       })
     },
     updateRepo({commit, state}, transacData) {
       commit('setProcessingId', transacData.id);
       delete transacData.data.selected;
-
+      commit('setProcessingStatus',{isProcessing: true, isError: false, message: 'Processing...'});
       const repoConn = utils.getAxios('PUT', state.auth_token, transacData.data, '/api/v1/repositories');
 
-      commit('setProcessingError', false);
-      commit('setIsProcessing', true);
-      commit('setProcessingMessage', 'Processing...')
       Promise.all([repoConn]).then( (response) => {
         let repoResp = response[0];
 
         if (!utils.validResponse(repoResp)) {
           let msg = utils.getErrorMessages(repoResp);
-          commit('setProcessingError', true);
-          commit('setProcessingMessage', msg);
+          commit('setProcessingStatus',{isProcessing: false, isError: true, message: msg});
         }
-        commit('setIsProcessing', false);
+        commit('setProcessingStatus',{isProcessing: false, isError: false, message: ''});
 
       }).catch((error) => {
-        commit('setProcessingMessage', error);
-        commit('setIsProcessing', false);
-        commit('setProcessingError', true);
+        commit('setProcessingStatus',{isProcessing: false, isError: true, message: error});
       })
     },
     deleteRepo({commit, state}, transacData) {
@@ -176,30 +170,24 @@ export default new Vuex.Store({
         reposIds.push(transacData.data[i].id);
       }
 
+      commit('setProcessingStatus',{isProcessing: true, isError: false, message: 'Processing...'});
       const repoConn = utils.getAxios('DELETE', state.auth_token, reposIds, '/api/v1/repositories');
-
-      commit('setIsProcessing', true);
-      commit('setProcessingMessage', 'Processing...')
-      commit('setProcessingError', false);
 
       Promise.all([repoConn]).then( (response) => {
         let repoResp = response[0];
 
         if (!utils.validResponse(repoResp)) {
-          let msg = utils.getErrorMessages(repoResp);
-          commit('setProcessingError', true);
-          commit('setProcessingMessage', msg);
+          commit('setProcessingStatus',{isProcessing: false, isError: true, message: utils.getErrorMessages(repoResp)});
         }
         commit('setIsProcessing', false);
 
       }).catch((error) => {
-        commit('setProcessingError', true);
-        commit('setIsProcessing', false);
-        commit('setProcessingMessage', error);
+        commit('setProcessingStatus',{isProcessing: false, isError: true, message: error});
       })
     },
     resetCacheRepo({commit, state}, transacData) {
       commit('setProcessingId', transacData.id);
+      commit('setProcessingStatus',{isProcessing: true, isError: false, message: 'Processing...'});
       let reposIds = [];
       for(let i=0; i<transacData.data.length; i++) {
         reposIds.push(transacData.data[i].id);
@@ -207,25 +195,17 @@ export default new Vuex.Store({
 
       const repoConn = utils.getAxios('PATCH', state.auth_token, reposIds, '/api/v1/repositories/resetcache');
 
-      commit('setProcessingMessage', 'Processing...')
-      commit('setProcessingError', false);
-      commit('setIsProcessing', true);
 
       Promise.all([repoConn]).then( (response) => {
         let repoResp = response[0];
 
         if (!utils.validResponse(repoResp)) {
-          let msg = utils.getErrorMessages(repoResp);
-          commit('setProcessingMessage', msg);
-          commit('setProcessingError', true);
+          commit('setProcessingStatus',{isProcessing: false, isError: true, message: utils.getErrorMessages(repoResp)});
         }
         commit('setIsProcessing', false);
 
       }).catch((error) => {
-        state.is_processing =false;
-        commit('setProcessingMessage', error);
-        commit('setProcessingError', true);
-        commit('setIsProcessing', false);
+        commit('setProcessingStatus',{isProcessing: false, isError: true, message: error});
       })
     },
     getCategories({commit, state}) {
@@ -243,75 +223,55 @@ export default new Vuex.Store({
         }
       })
       .catch( (error) => {
-        commit('setProcessingError', true);
-        commit('setProcessingMessage', error);
-        commit('setIsProcessing', false);
+        commit('setProcessingStatus',{isProcessing: false, isError: true, message: error});
       })
     },
     addCategory({commit, state}, transacData) {
       commit('setProcessingId', transacData.id);
-      commit('setIsProcessing', true);
-      commit('setProcessingError', false);
-      commit('setProcessingMessage', 'Processing...')
+      commit('setProcessingStatus',{isProcessing: true, isError: false, message: 'Processing...'});
 
       const axConn = utils.getAxios('POST', state.auth_token, transacData.data, '/api/v1/configurations/categories');
       axConn
       .then( response => {
         if (!utils.validResponse(response)) {
-          let msg = utils.getErrorMessages(response);
-          commit('setProcessingError', true);
-          commit('setProcessingMessage', msg);
+          commit('setProcessingStatus',{isProcessing: false, isError: true, message: utils.getErrorMessages(response)});
         }
         commit('setIsProcessing', false);
       })
       .catch( (error) => {
-        commit('setProcessingError', true);
-        commit('setProcessingMessage', error);
-        commit('setIsProcessing', false);
+        commit('setProcessingStatus',{isProcessing: false, isError: true, message: error});
       });
     },
     removeCategory({commit, state}, transacData) {
       commit('setProcessingId', transacData.id);
-      commit('setIsProcessing', true);
-      commit('setProcessingError', false);
-      commit('setProcessingMessage', 'Processing...')
+      commit('setProcessingStatus',{isProcessing: true, isError: false, message: 'Processing...'});
 
       const axConn = utils.getAxios('DELETE', state.auth_token, null, '/api/v1/configurations/categories/'+transacData.data.id);
       axConn
       .then( response => {
         if (!utils.validResponse(response)) {
-          let msg = utils.getErrorMessages(response);
-          commit('setProcessingError', true);
-          commit('setProcessingMessage', msg);
+          commit('setProcessingStatus',{isProcessing: false, isError: true, message: utils.getErrorMessages(response)});
         }
         commit('setIsProcessing', false);
       })
       .catch( (error) => {
-        commit('setProcessingError', true);
-        commit('setProcessingMessage', error);
-        commit('setIsProcessing', false);
+        commit('setProcessingStatus',{isProcessing: false, isError: true, message: error});
       });
     },
     updateCategory({commit, state}, transacData) {
+      commit('setProcessingStatus',{isProcessing: true, isError: false, message: 'Processing...'});
       commit('setProcessingId', transacData.id);
-      commit('setIsProcessing', true);
-      commit('setProcessingError', false);
-      commit('setProcessingMessage', 'Processing...')
 
       const axConn = utils.getAxios('PUT', state.auth_token, transacData.data, '/api/v1/configurations/categories');
       axConn
       .then( response => {
         if (!utils.validResponse(response)) {
-          let msg = utils.getErrorMessages(response);
-          commit('setProcessingError', true);
-          commit('setProcessingMessage', msg);
+          commit('setProcessingStatus',{isProcessing: false, isError: true, message: utils.getErrorMessages(response)});
         }
-        commit('setIsProcessing', false);
+        commit('setProcessingStatus',{isProcessing: false, isError: false, message: null});
       })
       .catch( (error) => {
-        commit('setProcessingError', true);
-        commit('setProcessingMessage', error);
-        commit('setIsProcessing', false);
+        commit('setProcessingStatus',{isProcessing: false, isError: true, message: error});
       });
     },
     fetchCategoryImages({commit, state}) {
@@ -326,9 +286,7 @@ export default new Vuex.Store({
         }
       })
       .catch( (error) => {
-        commit('setIsProcessing', false);
-        commit('setProcessingError', true);
-        commit('setProcessingMessage', error);
+        commit('setProcessingStatus',{isProcessing: false, isError: true, message: error});
       })
     },
     getEngagementPopups({commit, state}) {
@@ -351,98 +309,74 @@ export default new Vuex.Store({
         }
       })
       .catch( (error) => {
-        commit('setProcessingError', true);
-        commit('setProcessingMessage', error);
-        commit('setIsProcessing', false);
+        commit('setProcessingStatus',{isProcessing: false, isError: true, message: error});
       })
     },
     updateEngagementPopups({commit, state}, transacData) {
-      commit('setProcessingError', false);
+      commit('setProcessingStatus',{isProcessing: true, isError: false, message: 'Processing...'});
       commit('setProcessingId', transacData.id);
-      commit('setIsProcessing', true);
-      commit('setProcessingMessage', 'Processing...')
 
       const axConn = utils.getAxios('PUT', state.auth_token, transacData.data, '/api/v1/configurations/engagementpopups');
       axConn
       .then( response => {
         if (!utils.validResponse(response)) {
-          let msg = utils.getErrorMessages(response);
-          commit('setProcessingError', true);
-          commit('setProcessingMessage', msg);
+          commit('setProcessingStatus',{isProcessing: false, isError: true, message: utils.getErrorMessages(response)});
         }
         commit('setIsProcessing', false);
       })
       .catch( (error) => {
-        commit('setProcessingError', true);
-        commit('setProcessingMessage', error);
-        commit('setIsProcessing', false);
+        commit('setProcessingStatus',{isProcessing: false, isError: true, message: error});
       });
     },
     addEngagementPopups({commit, state}, transacData) {
       commit('setProcessingId', transacData.id);
-      commit('setIsProcessing', true);
-      commit('setProcessingError', false);
-      commit('setProcessingMessage', 'Processing...')
+      commit('setProcessingStatus',{isProcessing: true, isError: false, message: 'Processing...'});
 
       const axConn = utils.getAxios('POST', state.auth_token, transacData.data, '/api/v1/configurations/engagementpopups');
       axConn
       .then( response => {
         if (!utils.validResponse(response)) {
           let msg = utils.getErrorMessages(response);
-          commit('setProcessingError', true);
-          commit('setProcessingMessage', msg);
+          commit('setProcessingStatus',{isProcessing: false, isError: true, message: msg});
         }
         commit('setIsProcessing', false);
       })
       .catch( (error) => {
-        commit('setProcessingError', true);
-        commit('setProcessingMessage', error);
-        commit('setIsProcessing', false);
+        commit('setProcessingStatus',{isProcessing: false, isError: true, message: error});
       });
     },
     removeEngagementPopups({commit, state}, transacData) {
       commit('setProcessingId', transacData.id);
-      commit('setIsProcessing', true);
-      commit('setProcessingError', false);
-      commit('setProcessingMessage', 'Processing...')
+      commit('setProcessingStatus',{isProcessing: true, isError: false, message: 'Processing...'});
 
       const axConn = utils.getAxios('DELETE', state.auth_token, null, `/api/v1/configurations/engagementpopups/${transacData.data.id}`);
       axConn
       .then( response => {
         if (!utils.validResponse(response)) {
           let msg = utils.getErrorMessages(response);
-          commit('setProcessingError', true);
-          commit('setProcessingMessage', msg);
+          commit('setProcessingStatus',{isProcessing: false, isError: true, message: msg});
         }
         commit('setIsProcessing', false);
       })
       .catch( (error) => {
-        commit('setProcessingError', true);
-        commit('setProcessingMessage', error);
-        commit('setIsProcessing', false);
+        commit('setProcessingStatus',{isProcessing: false, isError: true, message: error});
       });
     },
     invalidateCloudfrontPath({ commit, state }, transacData) {
+      commit('setProcessingStatus',{isProcessing: true, isError: false, message: 'Processing...'});
       commit('setProcessingId', transacData.id);
-      commit('setIsProcessing', true);
-      commit('setProcessingError', false);
-      commit('setProcessingMessage', 'Processing...')
 
       const axConn = utils.getAxios('POST', state.auth_token, transacData.data, '/api/v1/invalidate');
       axConn
         .then(response => {
           if (!utils.validResponse(response)) {
-            let msg = utils.getErrorMessages(response);
-            commit('setProcessingError', true);
-            commit('setProcessingMessage', msg);
+            commit('setProcessingStatus',{isProcessing: false, isError: true, message: utils.getErrorMessages(response)});
           }
           commit('setIsProcessing', false);
           commit('setCompleted', true);
         })
         .catch((error) => {
-          commit('setProcessingError', true);
-          commit('setProcessingMessage', error);
-          commit('setIsProcessing', false);
+          commit('setProcessingStatus',{isProcessing: false, isError: true, message: error});
         });
     }
   }
