@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default {
     validResponse(response) {
       return response && response.status && response.status === 200 && response.data && response.data.code == 200;
@@ -43,5 +45,18 @@ export default {
         repository.codehubData.categories[i] = cat[0];
       }
       return repository;
+    },
+    getAxios(method, token, data, url) {
+      let axObj = {
+        method: method,
+        headers: {
+          'content-type': 'application/json',
+          'CHTOKEN': token
+        },
+        data: data,
+        crossDomain: true,
+        url: url
+      }
+      return axios(axObj);
     }
 }

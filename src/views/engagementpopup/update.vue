@@ -89,20 +89,6 @@ export default {
     this.selectedEngagementPopup = this.$store.state.selectedEngagementPopup;
   },
   computed: {
-    processing: {
-      get: function() {return this.$store.state.is_processing; },
-      set: function(val) { this.$store.commit('setIsProcessing', val)}
-    },
-    processingMessage: {
-      get: function() {return this.$store.state.processing_message;},
-      set: function(val) {this.$store.state.processing_message = val;}
-    },
-    processingError: {
-      get: function() {return this.$store.state.processing_error; }
-    },
-    processingId: {
-      get: function() {return this.$store.state.processing_id; }
-    },
     getColorClass: {
       get: function() {
         let val = (!this.selectedEngagementPopup || !this.selectedEngagementPopup.controlsColor) ? 'black' : this.selectedEngagementPopup.controlsColor;

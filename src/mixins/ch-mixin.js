@@ -60,5 +60,21 @@ export default {
         default: return 'ch-engpop-shadow-white';
       }
     }
+  },
+  computed: {
+    processing: {
+      get: function() {return this.$store.state.is_processing; },
+      set: function(val) { this.$store.commit('setIsProcessing', val)}
+    },
+    processingMessage: {
+      get: function() {return this.$store.state.processing_message;},
+      set: function(val) {this.$store.state.processing_message = val;}
+    },
+    processingError: {
+      get: function() {return this.$store.state.processing_error; }
+    },
+    processingId: {
+      get: function() {return this.$store.state.processing_id; }
+    }
   }
 }

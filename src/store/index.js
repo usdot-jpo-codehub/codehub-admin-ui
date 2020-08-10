@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
-import Utils from '../utils/utils.js'
+import utils from '../utils/utils.js'
 
 Vue.use(Vuex)
 
@@ -96,30 +95,12 @@ export default new Vuex.Store({
       commit('setFilteredRepos', []);
       commit('setFilterText', '');
 
-      const repositories = axios({
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'CHTOKEN': state.auth_token
-        },
-        crossDomain: true,
-        url: '/api/v1/repositories'
-      });
-
-      const categories = axios({
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'CHTOKEN': state.auth_token
-        },
-        crossDomain: true,
-        url: '/api/v1/configurations/categories'
-      });
-
+      const repositories = utils.getAxios('GET', state.auth_token, null, '/api/v1/repositories');
+      const categories = utils.getAxios('GET', state.auth_token, null, '/api/v1/configurations/categories');
       Promise.all([repositories, categories]).then( response => {
         let reposResp = response[0];
         let categoriesResp = response[1];
-        if (Utils.validResponse(reposResp) && Utils.validResponse(categoriesResp)) {
+        if (utils.validResponse(reposResp) && utils.validResponse(categoriesResp)) {
           let categoriesData = [...categoriesResp.data.result];
           for(let i = 0; i<categoriesData.length; i++) {
             categoriesData[i].selected = false;
@@ -129,7 +110,7 @@ export default new Vuex.Store({
           let reposData = [...reposResp.data.result];
           for(let i=0; i<reposData.length; i++){
             reposData[i].selected = false;
-            reposData[i] = Utils.resolveCategories(reposData[i], categoriesData);
+            reposData[i] = utils.resolveCategories(reposData[i], categoriesData);
           }
           commit('setRepos', reposData);
         }
@@ -142,68 +123,50 @@ export default new Vuex.Store({
     addRepo({commit, state}, transacData) {
       commit('setProcessingId', transacData.id);
 
-      const repoConn = axios({
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          'CHTOKEN': state.auth_token
-        },
-        data: transacData.data,
-        crossDomain: true,
-        url: '/api/v1/repositories'
-      });
+      const repoConn = utils.getAxios('POST', state.auth_token, transacData.data, '/api/v1/repositories');
 
       commit('setIsProcessing', true);
-      commit('setProcessingError', false);
       commit('setProcessingMessage', 'Processing...')
+      commit('setProcessingError', false);
       Promise.all([repoConn]).then( (response) => {
         let repoResp = response[0];
 
-        if (!Utils.validResponse(repoResp)) {
-          let msg = Utils.getErrorMessages(repoResp); 
-          commit('setProcessingError', true);
+        if (!utils.validResponse(repoResp)) {
+          let msg = utils.getErrorMessages(repoResp);
           commit('setProcessingMessage', msg);
+          commit('setProcessingError', true);
         }
         commit('setIsProcessing', false);
 
       }).catch((error) => {
-        commit('setProcessingError', true);
         commit('setProcessingMessage', error);
         commit('setIsProcessing', false);
+        commit('setProcessingError', true);
       })
     },
     updateRepo({commit, state}, transacData) {
       commit('setProcessingId', transacData.id);
       delete transacData.data.selected;
 
-      const repoConn = axios({
-        method: 'PUT',
-        headers: {
-          'content-type': 'application/json',
-          'CHTOKEN': state.auth_token
-        },
-        data: transacData.data,
-        crossDomain: true,
-        url: '/api/v1/repositories'
-      });
+      const repoConn = utils.getAxios('PUT', state.auth_token, transacData.data, '/api/v1/repositories');
 
-      commit('setIsProcessing', true);
       commit('setProcessingError', false);
+      commit('setIsProcessing', true);
       commit('setProcessingMessage', 'Processing...')
       Promise.all([repoConn]).then( (response) => {
         let repoResp = response[0];
 
-        if (!Utils.validResponse(repoResp)) {
-          let msg = Utils.getErrorMessages(repoResp); 
+        if (!utils.validResponse(repoResp)) {
+          let msg = utils.getErrorMessages(repoResp);
           commit('setProcessingError', true);
           commit('setProcessingMessage', msg);
         }
         commit('setIsProcessing', false);
 
       }).catch((error) => {
-        commit('setProcessingError', true);
         commit('setProcessingMessage', error);
         commit('setIsProcessing', false);
+        commit('setProcessingError', true);
       })
     },
     deleteRepo({commit, state}, transacData) {
@@ -213,26 +176,17 @@ export default new Vuex.Store({
         reposIds.push(transacData.data[i].id);
       }
 
-      const repoConn = axios({
-        method: 'DELETE',
-        headers: {
-          'content-type': 'application/json',
-          'CHTOKEN': state.auth_token
-        },
-        data: reposIds,
-        crossDomain: true,
-        url: '/api/v1/repositories'
-      });
+      const repoConn = utils.getAxios('DELETE', state.auth_token, reposIds, '/api/v1/repositories');
 
       commit('setIsProcessing', true);
-      commit('setProcessingError', false);
       commit('setProcessingMessage', 'Processing...')
+      commit('setProcessingError', false);
 
       Promise.all([repoConn]).then( (response) => {
         let repoResp = response[0];
 
-        if (!Utils.validResponse(repoResp)) {
-          let msg = Utils.getErrorMessages(repoResp); 
+        if (!utils.validResponse(repoResp)) {
+          let msg = utils.getErrorMessages(repoResp);
           commit('setProcessingError', true);
           commit('setProcessingMessage', msg);
         }
@@ -240,8 +194,8 @@ export default new Vuex.Store({
 
       }).catch((error) => {
         commit('setProcessingError', true);
-        commit('setProcessingMessage', error);
         commit('setIsProcessing', false);
+        commit('setProcessingMessage', error);
       })
     },
     resetCacheRepo({commit, state}, transacData) {
@@ -251,47 +205,33 @@ export default new Vuex.Store({
         reposIds.push(transacData.data[i].id);
       }
 
-      const repoConn = axios({
-        method: 'PATCH',
-        headers: {
-          'content-type': 'application/json',
-          'CHTOKEN': state.auth_token
-        },
-        data: reposIds,
-        crossDomain: true,
-        url: '/api/v1/repositories/resetcache'
-      });
+      const repoConn = utils.getAxios('PATCH', state.auth_token, reposIds, '/api/v1/repositories/resetcache');
 
-      commit('setIsProcessing', true);
-      commit('setProcessingError', false);
       commit('setProcessingMessage', 'Processing...')
+      commit('setProcessingError', false);
+      commit('setIsProcessing', true);
 
       Promise.all([repoConn]).then( (response) => {
         let repoResp = response[0];
 
-        if (!Utils.validResponse(repoResp)) {
-          let msg = Utils.getErrorMessages(repoResp); 
-          commit('setProcessingError', true);
+        if (!utils.validResponse(repoResp)) {
+          let msg = utils.getErrorMessages(repoResp);
           commit('setProcessingMessage', msg);
+          commit('setProcessingError', true);
         }
         commit('setIsProcessing', false);
 
       }).catch((error) => {
-        commit('setProcessingError', true);
+        state.is_processing =false;
         commit('setProcessingMessage', error);
+        commit('setProcessingError', true);
         commit('setIsProcessing', false);
       })
     },
     getCategories({commit, state}) {
       commit('setCategories', []);
-      let options =  {
-        headers: {
-          'Content-Type':'application/json',
-          'CHTOKEN': state.auth_token
-        }
-      };
-      axios
-      .get('/api/v1/configurations/categories', options)
+      const axConn = utils.getAxios('GET', state.auth_token, null, '/api/v1/configurations/categories');
+      axConn
       .then( response => {
         if (response.data.code == 200) {
           if (response.data.result) {
@@ -314,19 +254,11 @@ export default new Vuex.Store({
       commit('setProcessingError', false);
       commit('setProcessingMessage', 'Processing...')
 
-      let options = {
-        headers: {
-          'Content-Type': 'application/json',
-          'CHTOKEN': state.auth_token
-        },
-        crossDomain: true
-      }
-
-      axios
-      .post('/api/v1/configurations/categories', transacData.data, options)
+      const axConn = utils.getAxios('POST', state.auth_token, transacData.data, '/api/v1/configurations/categories');
+      axConn
       .then( response => {
-        if (!Utils.validResponse(response)) {
-          let msg = Utils.getErrorMessages(response);
+        if (!utils.validResponse(response)) {
+          let msg = utils.getErrorMessages(response);
           commit('setProcessingError', true);
           commit('setProcessingMessage', msg);
         }
@@ -344,19 +276,11 @@ export default new Vuex.Store({
       commit('setProcessingError', false);
       commit('setProcessingMessage', 'Processing...')
 
-      let options = {
-        headers: {
-          'Content-Type': 'application/json',
-          'CHTOKEN': state.auth_token
-        },
-        crossDomain: true
-      }
-
-      axios
-      .delete(`/api/v1/configurations/categories/${transacData.data.id}`, options)
+      const axConn = utils.getAxios('DELETE', state.auth_token, null, '/api/v1/configurations/categories/'+transacData.data.id);
+      axConn
       .then( response => {
-        if (!Utils.validResponse(response)) {
-          let msg = Utils.getErrorMessages(response);
+        if (!utils.validResponse(response)) {
+          let msg = utils.getErrorMessages(response);
           commit('setProcessingError', true);
           commit('setProcessingMessage', msg);
         }
@@ -374,19 +298,11 @@ export default new Vuex.Store({
       commit('setProcessingError', false);
       commit('setProcessingMessage', 'Processing...')
 
-      let options = {
-        headers: {
-          'Content-Type': 'application/json',
-          'CHTOKEN': state.auth_token
-        },
-        crossDomain: true
-      }
-
-      axios
-      .put('/api/v1/configurations/categories', transacData.data, options)
+      const axConn = utils.getAxios('PUT', state.auth_token, transacData.data, '/api/v1/configurations/categories');
+      axConn
       .then( response => {
-        if (!Utils.validResponse(response)) {
-          let msg = Utils.getErrorMessages(response);
+        if (!utils.validResponse(response)) {
+          let msg = utils.getErrorMessages(response);
           commit('setProcessingError', true);
           commit('setProcessingMessage', msg);
         }
@@ -400,14 +316,8 @@ export default new Vuex.Store({
     },
     fetchCategoryImages({commit, state}) {
       commit('setCategoryImages', []);
-      let options =  {
-        headers: {
-          'Content-Type':'application/json',
-          'CHTOKEN': state.auth_token
-        }
-      };
-      axios
-      .get('/api/v1/images/categories', options)
+      const axConn = utils.getAxios('GET', state.auth_token, null, '/api/v1/images/categories');
+      axConn
       .then( response => {
         if (response.data.code == 200) {
           if (response.data.result) {
@@ -424,14 +334,9 @@ export default new Vuex.Store({
     getEngagementPopups({commit, state}) {
       commit('setEngagementPopups', []);
       commit('setSelectedEngagementPopup', null);
-      let options =  {
-        headers: {
-          'Content-Type':'application/json',
-          'CHTOKEN': state.auth_token
-        }
-      };
-      axios
-      .get('/api/v1/configurations/engagementpopups', options)
+
+      const axConn = utils.getAxios('GET', state.auth_token, null, '/api/v1/configurations/engagementpopups');
+      axConn
       .then( response => {
         if (response.data.code == 200) {
           if (response.data.result) {
@@ -457,19 +362,11 @@ export default new Vuex.Store({
       commit('setIsProcessing', true);
       commit('setProcessingMessage', 'Processing...')
 
-      let options = {
-        headers: {
-          'Content-Type': 'application/json',
-          'CHTOKEN': state.auth_token
-        },
-        crossDomain: true
-      }
-
-      axios
-      .put('/api/v1/configurations/engagementpopups', transacData.data, options)
+      const axConn = utils.getAxios('PUT', state.auth_token, transacData.data, '/api/v1/configurations/engagementpopups');
+      axConn
       .then( response => {
-        if (!Utils.validResponse(response)) {
-          let msg = Utils.getErrorMessages(response);
+        if (!utils.validResponse(response)) {
+          let msg = utils.getErrorMessages(response);
           commit('setProcessingError', true);
           commit('setProcessingMessage', msg);
         }
@@ -487,19 +384,11 @@ export default new Vuex.Store({
       commit('setProcessingError', false);
       commit('setProcessingMessage', 'Processing...')
 
-      let options = {
-        headers: {
-          'Content-Type': 'application/json',
-          'CHTOKEN': state.auth_token
-        },
-        crossDomain: true
-      }
-
-      axios
-      .post('/api/v1/configurations/engagementpopups', transacData.data, options)
+      const axConn = utils.getAxios('POST', state.auth_token, transacData.data, '/api/v1/configurations/engagementpopups');
+      axConn
       .then( response => {
-        if (!Utils.validResponse(response)) {
-          let msg = Utils.getErrorMessages(response);
+        if (!utils.validResponse(response)) {
+          let msg = utils.getErrorMessages(response);
           commit('setProcessingError', true);
           commit('setProcessingMessage', msg);
         }
@@ -517,19 +406,11 @@ export default new Vuex.Store({
       commit('setProcessingError', false);
       commit('setProcessingMessage', 'Processing...')
 
-      let options = {
-        headers: {
-          'Content-Type': 'application/json',
-          'CHTOKEN': state.auth_token
-        },
-        crossDomain: true
-      }
-
-      axios
-      .delete(`/api/v1/configurations/engagementpopups/${transacData.data.id}`, options)
+      const axConn = utils.getAxios('DELETE', state.auth_token, null, `/api/v1/configurations/engagementpopups/${transacData.data.id}`);
+      axConn
       .then( response => {
-        if (!Utils.validResponse(response)) {
-          let msg = Utils.getErrorMessages(response);
+        if (!utils.validResponse(response)) {
+          let msg = utils.getErrorMessages(response);
           commit('setProcessingError', true);
           commit('setProcessingMessage', msg);
         }
@@ -547,19 +428,11 @@ export default new Vuex.Store({
       commit('setProcessingError', false);
       commit('setProcessingMessage', 'Processing...')
 
-      let options = {
-        headers: {
-          'Content-Type': 'application/json',
-          'CHTOKEN': state.auth_token
-        },
-        crossDomain: true
-      }
-
-      axios
-        .post('/api/v1/invalidate', transacData.data, options)
+      const axConn = utils.getAxios('POST', state.auth_token, transacData.data, '/api/v1/invalidate');
+      axConn
         .then(response => {
-          if (!Utils.validResponse(response)) {
-            let msg = Utils.getErrorMessages(response);
+          if (!utils.validResponse(response)) {
+            let msg = utils.getErrorMessages(response);
             commit('setProcessingError', true);
             commit('setProcessingMessage', msg);
           }

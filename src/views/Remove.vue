@@ -33,8 +33,10 @@
 </template>
 <script>
 import CHRepo from '@/components/ch-repo.vue';
+import CHMixin from '@/mixins/ch-mixin.js';
 export default {
   name: 'remove',
+  mixins: [CHMixin],
   data: function() {
     return {
       message: '',
@@ -49,20 +51,6 @@ export default {
   computed: {
     selectedRepos: {
       get: function() { return this.$store.state.selected_repos; }
-    },
-    processingMessage: {
-      get: function() {return this.$store.state.processing_message;},
-      set: function(val) {this.$store.state.processing_message = val;}
-    },
-    processing: {
-      get: function() {return this.$store.state.is_processing; },
-      set: function(val) { this.$store.commit('setIsProcessing', val)}
-    },
-    processingId: {
-      get: function() {return this.$store.state.processing_id; }
-    },
-    processingError: {
-      get: function() {return this.$store.state.processing_error; }
     }
   },
   watch: {
