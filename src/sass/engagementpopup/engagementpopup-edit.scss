@@ -145,6 +145,9 @@
     resize: vertical;
     word-wrap: none;
     font-size: units(2);
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow-x: scroll;
   }
 }
 .ch-engpo__controls-color {

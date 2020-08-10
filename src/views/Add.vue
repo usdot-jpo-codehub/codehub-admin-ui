@@ -63,9 +63,10 @@
 </template>
 <script>
 import Utils from '../utils/utils';
-
+import CHMixin from '@/mixins/ch-mixin.js';
 export default {
   name: 'add',
+  mixins: [CHMixin],
   data: function() {
     return {
       message: '',
@@ -110,20 +111,6 @@ export default {
     },
     statuses: {
       get: function() {return Utils.getStatusList();}
-    },
-    processing: {
-      get: function() {return this.$store.state.is_processing; },
-      set: function(val) { this.$store.commit('setIsProcessing', val)}
-    },
-    processingError: {
-      get: function() {return this.$store.state.processing_error; }
-    },
-    processingMessage: {
-      get: function() {return this.$store.state.processing_message;},
-      set: function(val) {this.$store.state.processing_message = val;}
-    },
-    processingId: {
-      get: function() {return this.$store.state.processing_id; }
     }
   },
   watch: {

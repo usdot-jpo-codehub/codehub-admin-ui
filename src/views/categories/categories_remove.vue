@@ -26,8 +26,10 @@
 </template>
 <script>
 import CHCategory from '@/components/ch-category.vue';
+import CHMixin from '@/mixins/ch-mixin.js';
 export default {
   name: 'CategoriesRemove',
+  mixins: [CHMixin],
   data: function() {
     return {
       message: '',
@@ -42,20 +44,6 @@ export default {
   computed: {
     selectedCategory: {
       get: function() { return this.$store.state.selected_category; }
-    },
-    processing: {
-      get: function() {return this.$store.state.is_processing; },
-      set: function(val) { this.$store.commit('setIsProcessing', val)}
-    },
-    processingMessage: {
-      get: function() {return this.$store.state.processing_message;},
-      set: function(val) {this.$store.state.processing_message = val;}
-    },
-    processingError: {
-      get: function() {return this.$store.state.processing_error; }
-    },
-    processingId: {
-      get: function() {return this.$store.state.processing_id; }
     }
   },
   watch: {
