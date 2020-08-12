@@ -59,8 +59,10 @@
 
 <script>
 import CHCategoryImageSelector from '@/components/ch-category-image-selector.vue';
+import CHMixin from '@/mixins/ch-mixin.js';
 export default {
   name: 'CategoriesUpdate',
+  mixins: [CHMixin],
   data: function() {
     return {
       message: '',
@@ -80,20 +82,6 @@ export default {
     this.selectedCategory = this.$store.state.selected_category;
   },
   computed: {
-    processing: {
-      get: function() {return this.$store.state.is_processing; },
-      set: function(val) { this.$store.commit('setIsProcessing', val)}
-    },
-    processingMessage: {
-      get: function() {return this.$store.state.processing_message;},
-      set: function(val) {this.$store.state.processing_message = val;}
-    },
-    processingError: {
-      get: function() {return this.$store.state.processing_error; }
-    },
-    processingId: {
-      get: function() {return this.$store.state.processing_id; }
-    },
     categoryImages: {
       get: function() {
         return this.$store.state.categoryImages;

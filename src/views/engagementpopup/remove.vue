@@ -26,8 +26,10 @@
 </template>
 <script>
 import CHEngagementPopup from '@/components/ch-engagementpopup'
+import CHMixin from '@/mixins/ch-mixin.js';
 export default {
   name: 'EngagementPopupRemove',
+  mixins: [CHMixin],
   data: function() {
     return {
       message: '',
@@ -42,20 +44,6 @@ export default {
   computed: {
     selectedEngagementPopup: {
       get: function() { return this.$store.state.selectedEngagementPopup; }
-    },
-    processing: {
-      get: function() {return this.$store.state.is_processing; },
-      set: function(val) { this.$store.commit('setIsProcessing', val)}
-    },
-    processingMessage: {
-      get: function() {return this.$store.state.processing_message;},
-      set: function(val) {this.$store.state.processing_message = val;}
-    },
-    processingError: {
-      get: function() {return this.$store.state.processing_error; }
-    },
-    processingId: {
-      get: function() {return this.$store.state.processing_id; }
     }
   },
   watch: {
