@@ -72,7 +72,7 @@ export default {
           return 'ch-field--value-navy'
         } else if (this.color === 'gray') {
           return 'ch-field--value-gray'
-        } else if (this.color === 'lighgray') {
+        } else if (this.color === 'lightgray') {
           return 'ch-field--value-lightgray'
         } else if (this.color === 'red') {
           return 'ch-field--value-red'

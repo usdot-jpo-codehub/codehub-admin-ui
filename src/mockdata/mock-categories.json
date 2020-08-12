@@ -1,0 +1,57 @@
+[
+  {
+      "id": "1",
+      "name": "Self Driving Car",
+      "description": "A vehicle that is capable of sensing its environment and moving safely with little or no human input.",
+      "lastModified": 1592257780000,
+      "orderPopular": 3,
+      "imageFileName": "http://localhost:8083/simages/categories/CodeHub_ApplicationCategories_DriverAssistance.png",
+      "isEnabled": true,
+      "isPopular": true,
+      "selected": true
+  },
+  {
+      "id": "2",
+      "name": "Vehicle Traffic Control",
+      "description": "System that combines traditional traffic lights with an array of sensors and artificial intelligence.",
+      "lastModified": 1592012954000,
+      "orderPopular": 5,
+      "imageFileName": "http://localhost:8083/simages/categories/CodeHub_ApplicationCategories_TransitManagement.png",
+      "isEnabled": true,
+      "isPopular": true,
+      "selected": false
+  },
+  {
+      "id": "3",
+      "name": "Artificial Intelligence",
+      "description": "Any device that perceives its environment and takes actions that maximize its chance of successfully achieving its goals.",
+      "lastModified": null,
+      "orderPopular": null,
+      "imageFileName": null,
+      "isEnabled": true,
+      "isPopular": false,
+      "selected": false
+  },
+  {
+      "id": "2f435b1b-a6ae-4884-a98e-805d60b4aa16",
+      "name": "Arterial Management",
+      "description": "Arterial Management strategies are used to effectively and successfully manage traffic and control arterial roadways. Examples are: Traffic signal improvements. Advanced traffic signal control.\n",
+      "lastModified": 1583441024000,
+      "orderPopular": null,
+      "imageFileName": null,
+      "isEnabled": true,
+      "isPopular": false,
+      "selected": false
+  },
+  {
+      "id": "f6fd71fa-745c-4261-8197-a14acbc0b38c",
+      "name": " Collision Avoidance",
+      "description": "ollision avoidance is the maintenance of systems and practices designed to prevent vehicles (such as aircraft, motor vehicles, ships, and trains) from colliding with each other. Examples include: Airborne collision avoidance systems for aircraft.",
+      "lastModified": 1583441082000,
+      "orderPopular": null,
+      "imageFileName": null,
+      "isEnabled": true,
+      "isPopular": false,
+      "selected": false
+  }
+]

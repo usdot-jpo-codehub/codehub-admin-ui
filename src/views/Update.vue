@@ -102,28 +102,31 @@ export default {
     }
   },
   created: function() {
-    if (this.$store.state.selected_repos.length > 0){
-      this.selectedRepo = this.$store.state.selected_repos[0];
-      let categories = [...this.$store.state.categories.filter(x => x.isEnabled)];
-      categories.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1);
-      categories.forEach(x => x.selected = false);
-      if (!this.selectedRepo.codehubData.categories || this.selectedRepo.codehubData.categories.length==0) {
-        this.repoCategories = categories;
-        return;
-      }
-
-      for(let i=0; i<this.selectedRepo.codehubData.categories.length; i++) {
-        let cat = this.selectedRepo.codehubData.categories[i];
-        let filCat = categories.filter(x => x.id == cat.id);
-        if (filCat.length > 0)
-        {
-          filCat[0].selected = true;
-        }
-      }
-      this.repoCategories = categories;
-    }
+    this.prepareData();
   },
   methods: {
+    prepareData: function() {
+      if (this.$store.state.selected_repos.length > 0){
+        this.selectedRepo = this.$store.state.selected_repos[0];
+        let categories = [...this.$store.state.categories.filter(x => x.isEnabled)];
+        categories.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1);
+        categories.forEach(x => x.selected = false);
+        if (!this.selectedRepo.codehubData.categories || this.selectedRepo.codehubData.categories.length==0) {
+          this.repoCategories = categories;
+          return;
+        }
+
+        for(let i=0; i<this.selectedRepo.codehubData.categories.length; i++) {
+          let cat = this.selectedRepo.codehubData.categories[i];
+          let filCat = categories.filter(x => x.id == cat.id);
+          if (filCat.length > 0)
+          {
+            filCat[0].selected = true;
+          }
+        }
+        this.repoCategories = categories;
+      }
+    },
     cancelClicked: function() {
       this.$router.push({path:'/'});
     },
@@ -157,7 +160,7 @@ export default {
           this.message ='Done!';
           this.$store.dispatch('getAll');
           this.$router.push({path: '/'});
-        }, 1500);
+        }, 500);
       }
     }
   }

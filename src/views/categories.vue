@@ -17,9 +17,6 @@ export default {
     }
   },
   computed: {
-    isSelected: {
-      get: function() {return this.$store.state.categories.filter(x => x.selected).length > 0;}
-    },
     isVisible: {
       get: function() {  return this.$route.name == 'categories-home'; }
     },

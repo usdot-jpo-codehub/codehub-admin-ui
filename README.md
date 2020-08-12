@@ -43,7 +43,7 @@ A [Docker](https://www.docker.com/) image can be build with the next command lin
 The following command with the correct values for the environment variable will start a Docker container.
 ```bash
 docker run --rm -d -p 8097:80 \
--e PROXY_PASS_URL='proxy_pass "http://[HOST:PORT]/api";' \
+-e PROXY_PASS='proxy_pass "http://[HOST:PORT]/api";' \
 -t -i codehub-admin-ui:latest
 ```
 

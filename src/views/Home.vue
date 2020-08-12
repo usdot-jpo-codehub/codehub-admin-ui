@@ -39,9 +39,6 @@ export default {
           return this.$store.state.filtered_repos;
         }
       }
-    },
-    categories: {
-      get: function() {return this.$store.state.categories;}
     }
   },
   methods: {

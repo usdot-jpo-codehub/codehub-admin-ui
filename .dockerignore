@@ -11,3 +11,7 @@ node_modules/
 build-and-run-docker.sh
 buildspec.yml
 Dockerfile
+/coverage
+/.scannerwork
+/.nyc_output
+sonar-project.properties
