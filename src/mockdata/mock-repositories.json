@@ -1,0 +1,147 @@
+[
+  {
+      "id": "bcc2c7dae1f3b3ebfae51c6673b2a196",
+      "sourceData": {
+          "name": "codehub-admin-api",
+          "repositoryUrl": "https://github.com/usdot-jpo-codehub/codehub-admin-api",
+          "owner": {
+              "name": "usdot-jpo-codehub"
+          }
+      },
+      "generatedData": {
+          "rank": 0
+      },
+      "codehubData": {
+          "etag": "N/A",
+          "source": "github",
+          "lastModified": 1597103240000,
+          "lastIngested": null,
+          "badges": {
+              "status": "pending",
+              "isFeatured": false
+          },
+          "categories": [
+              "1"
+          ],
+          "isVisible": true,
+          "isIngested": false,
+          "isIngestionEnabled": true
+      }
+  },
+  {
+      "id": "a95e9d259c352f6b465d1e8a6e9ef22f",
+      "sourceData": {
+          "name": "V2I-Hub",
+          "repositoryUrl": "https://github.com/OSADP/V2I-Hub",
+          "owner": {
+              "name": "OSADP"
+          }
+      },
+      "generatedData": {
+          "rank": 83
+      },
+      "codehubData": {
+          "etag": "W/\"6a6856401acc8634ad18c475455b7d93\"",
+          "source": "github",
+          "lastModified": 1585007247000,
+          "lastIngested": 1582232253000,
+          "badges": {
+              "status": "inactive",
+              "isFeatured": false
+          },
+          "categories": [
+              "39ec7c4a-bed9-4fa0-8021-b788a91d27e2"
+          ],
+          "isVisible": true,
+          "isIngested": true,
+          "isIngestionEnabled": true
+      }
+  },
+  {
+      "id": "5cf7575f44d338ce2b475b739e6f7ff2",
+      "sourceData": {
+          "name": "SEMI-ODE",
+          "repositoryUrl": "https://github.com/OSADP/SEMI-ODE",
+          "owner": {
+              "name": "OSADP"
+          }
+      },
+      "generatedData": {
+          "rank": 805
+      },
+      "codehubData": {
+          "etag": "W/\"57466b1fc3e3ef38d1e7771d266abe64\"",
+          "source": "github",
+          "lastModified": 1583443251000,
+          "lastIngested": 1582231711000,
+          "badges": {
+              "status": "inactive",
+              "isFeatured": false
+          },
+          "categories": [
+              "39ec7c4a-bed9-4fa0-8021-b788a91d27e2"
+          ],
+          "isVisible": true,
+          "isIngested": true,
+          "isIngestionEnabled": true
+      }
+  },
+  {
+      "id": "94d5ba6a109d57eb5f0e8d570ddd0b20",
+      "sourceData": {
+          "name": "AMS-TCA-Aimsun",
+          "repositoryUrl": "https://github.com/OSADP/AMS-TCA-Aimsun",
+          "owner": {
+              "name": "OSADP"
+          }
+      },
+      "generatedData": {
+          "rank": 18
+      },
+      "codehubData": {
+          "etag": "W/\"dca56f8cd0bd66a1cfec85e66f025585\"",
+          "source": "github",
+          "lastModified": 1583443227000,
+          "lastIngested": 1582228161000,
+          "badges": {
+              "status": "inactive",
+              "isFeatured": false
+          },
+          "categories": [
+              "39ec7c4a-bed9-4fa0-8021-b788a91d27e2"
+          ],
+          "isVisible": true,
+          "isIngested": true,
+          "isIngestionEnabled": true
+      }
+  },
+  {
+      "id": "f64f031a1408cc7141a1aec5ee8af795",
+      "sourceData": {
+          "name": "RCVW",
+          "repositoryUrl": "https://github.com/OSADP/RCVW",
+          "owner": {
+              "name": "OSADP"
+          }
+      },
+      "generatedData": {
+          "rank": 22
+      },
+      "codehubData": {
+          "etag": "W/\"776e4012c2fb5a210e722935e46082a5\"",
+          "source": "github",
+          "lastModified": 1583443184000,
+          "lastIngested": 1582227620000,
+          "badges": {
+              "status": "inactive",
+              "isFeatured": false
+          },
+          "categories": [
+              "39ec7c4a-bed9-4fa0-8021-b788a91d27e2"
+          ],
+          "isVisible": true,
+          "isIngested": true,
+          "isIngestionEnabled": true
+      }
+  }
+]

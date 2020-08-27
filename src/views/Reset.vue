@@ -71,7 +71,7 @@ export default {
           this.message ='Done!';
           this.$store.dispatch('getAll');
           this.$router.push({path: '/'});
-        }, 1500);
+        }, 500);
       }
     },
     resetClicked: function() {

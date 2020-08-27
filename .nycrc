@@ -1,0 +1,14 @@
+{
+  "extension": [
+    ".js",
+    ".vue"
+  ],
+  "instrument": false,
+  "sourceMap": false,
+  "reportDir": "coverage",
+  "reporter": [
+    "lcovonly",
+    "text",
+    "text-summary"
+  ]
+}

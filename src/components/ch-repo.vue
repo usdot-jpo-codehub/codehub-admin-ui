@@ -1,5 +1,5 @@
 <template>
-  <div class="ch-repo--wrapper" >
+  <div v-if="item" class="ch-repo--wrapper" >
     <div class="ch-repo--row ch-repo--row-space-between">
       <div class="ch-repo--row">
         <input v-if="!hideControls" type="checkbox" name="" id="" v-model="item.selected">

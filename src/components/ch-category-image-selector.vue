@@ -22,7 +22,10 @@ export default {
   },
   data: function() {
     return {
-      selectedImage: null
+      selectedImage: null,
+      selectedCategory: {
+        imageFileName: null
+      }
     }
   },
   computed: {

@@ -11,18 +11,18 @@
       <hr>
       <div class="ch-add--input-checkbox">
         <input type="checkbox" v-model="newRepo.codehubData.isIngestionEnabled" name="add-input-enabled" id="id-add-input-enabled">
-        <span>Enabled</span>
-        <input type="checkbox" v-model="newRepo.codehubData.isVisible" name="add-input-enabled" id="id-add-input-enabled">
-        <span>Visible</span>
+        <span id="id-add-input-enabled-label">Enabled</span>
+        <input type="checkbox" v-model="newRepo.codehubData.isVisible" name="add-input-visible" id="id-add-input-visible">
+        <span id="id-add-input-visible-label">Visible</span>
         <input type="checkbox" v-model="newRepo.codehubData.badges.isFeatured" name="add-input-featured" id="id-add-input-featured">
-        <span>Featured</span>
+        <span id="id-add-input-featured-label">Featured</span>
       </div>
       <div :class="invalidUrl ? 'ch-add--input ch-add--input-alert' : 'ch-add--input'">
-        <label for="id-add-input-url">Url</label>
+        <label for="id-add-input-url" id="id-add-input-url-label">Url</label>
         <input type="text" v-model="newRepo.sourceData.repositoryUrl" @change="urlChanged()" name="add-input-url" id="id-add-input-url">
       </div>
       <div :class="invalidSource ? 'ch-add--input ch-add--input-alert' : 'ch-add--input'">
-        <label for="id-add-select-source">Source</label>
+        <label for="id-add-select-source" id="id-add-select-source-label">Source</label>
         <select v-model="newRepo.codehubData.source" name="add-select-source" id="id-add-select-source" size="1">
           <option v-for="(source, index) in sources" :key="index" :value="source.value">{{source.name}}</option>
         </select>
@@ -34,17 +34,17 @@
         </select>
       </div>
       <div class="ch-add--input ch-add--input-disable">
-        <label for="id-add-input-name">Name</label>
+        <label for="id-add-input-name" id="id-add-input-name-label">Name</label>
         <input disabled type="text" v-model="newRepo.sourceData.name" name="add-input-name" id="id-add-input-name" placeholder="Computed from URL...">
       </div>
       <div class="ch-add--input ch-add--input-disable">
-        <label for="id-add-input-owner">Owner</label>
+        <label for="id-add-input-owner" id="id-add-input-owner-label">Owner</label>
         <input disabled type="text" v-model="newRepo.sourceData.owner.name" name="add-input-owner" id="id-add-input-owner" placeholder="Computed from URL...">
       </div>
       <div class="ch-add--categories">
         <div :class="invalidCategories ? 'ch-add--categories-list ch-add--input-alert' : 'ch-add--categories-list'">
           <label>Categories</label>
-          <ul>
+          <ul id="id-ul-categories">
             <li v-for="(item,index) in repoCategories" :key="index">
               <input type="checkbox" v-model="item.selected">
               {{item.name}}
@@ -54,8 +54,8 @@
         </div>
       </div>
       <div class="ch-add--controls">
-        <button v-on:click="okClicked">Ok</button>
-        <button v-on:click="cancelClicked">Cancel</button>
+        <button id="btnOk" v-on:click="okClicked">Ok</button>
+        <button id="btnCancel" v-on:click="cancelClicked">Cancel</button>
       </div>
     </div>
     
@@ -111,12 +111,16 @@ export default {
     },
     statuses: {
       get: function() {return Utils.getStatusList();}
+    },
+    processing: {
+      get: function() {return this.$store.state.is_processing;},
+      set: function(val){this.$store.commit('setIsProcessing', val);}
     }
   },
   watch: {
     processing: function(newValue, oldValue) {
       if (oldValue && !newValue) {
-        if (this.processingId === 'Add') {
+        if (this.$store.state.processing_id === 'Add') {
           this.closeView();
         }
       }
@@ -154,7 +158,7 @@ export default {
           this.message ='Done!';
           this.$store.dispatch('getAll');
           this.$router.push({path: '/'});
-        }, 1500);
+        }, 500);
       }
     },
     urlChanged: function() {
